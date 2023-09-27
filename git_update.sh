@@ -7,7 +7,7 @@ echo "update to git"
 chmod u+x git_update.sh
 
 git add .
-git commit -m "Initial upload"
+git commit -m "README added"
 git push --set-upstream Weather master
 
 
