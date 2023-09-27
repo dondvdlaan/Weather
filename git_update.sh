@@ -7,7 +7,7 @@ echo "update to git"
 chmod u+x git_update.sh
 
 git add .
-git commit -m "Unit test added to V1"
+git commit -m "Delete file git_update "
 git push --set-upstream Weather master
 
 
