@@ -7,7 +7,7 @@ echo "update to git"
 chmod u+x git_update.sh
 
 git add .
-git commit -m "Delete file git_update "
+git commit -m "V2 Split in to microservices"
 git push --set-upstream Weather master
 
 

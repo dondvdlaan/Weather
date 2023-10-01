@@ -1,0 +1,8 @@
+# Port number of javaBE server
+server.port: 8081
+
+# Location service URL, internal microservice message, no ssl needed
+cityUrl: "http://localhost:8082/city?name="
+
+# Conditions service URL,  internal microservice message, no ssl needed
+weatherUrl: "http://localhost:8083/conditions"
