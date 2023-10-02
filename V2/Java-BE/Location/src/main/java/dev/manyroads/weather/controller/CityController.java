@@ -1,11 +1,10 @@
 package dev.manyroads.weather.controller;
 
-import dev.manyroads.weather.model.City;
 import dev.manyroads.weather.service.CityService;
+import dev.manyroads.weather.model.City;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
@@ -28,13 +27,17 @@ public class CityController {
             value="/city",
             produces = "application/json"
     )
-    public City getCityLocation(@RequestParam( value = "name") String cityName){
+    public City getCityLocation(@RequestParam( value = "name") String cityName)
+            throws RestClientException, Exception{
 
         logger.info("cityName: " + cityName);
 
         // Initialise variables
         City city = new City();
 
+        city = cityService.getCityCoordinates(cityName);
+
+        /*
         // Get city coordinates
         try{
             city = cityService.getCityCoordinates(cityName);
@@ -46,6 +49,8 @@ public class CityController {
             return returnDefault();
             // TODO: implement rety / circuitbreaker, because the API returns often 500 error
         }
+
+         */
 
         logger.info("Returns city: " + city);
 

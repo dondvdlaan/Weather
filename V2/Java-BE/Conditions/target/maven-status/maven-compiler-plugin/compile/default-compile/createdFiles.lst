@@ -1,7 +1,3 @@
 dev\manyroads\weather\controller\ConditionsController.class
-dev\manyroads\weather\model\City.class
 dev\manyroads\weather\service\WeatherService.class
-dev\manyroads\weather\model\CityWeather.class
-dev\manyroads\weather\model\WeatherRaw.class
 dev\manyroads\weather\Main.class
-dev\manyroads\weather\model\Weather.class

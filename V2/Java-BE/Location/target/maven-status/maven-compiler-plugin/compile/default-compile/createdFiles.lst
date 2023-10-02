@@ -1,7 +1,4 @@
 dev\manyroads\weather\service\CityService.class
-dev\manyroads\weather\model\City.class
-dev\manyroads\weather\model\CityWeather.class
-dev\manyroads\weather\model\WeatherRaw.class
 dev\manyroads\weather\controller\CityController.class
 dev\manyroads\weather\Main.class
-dev\manyroads\weather\model\Weather.class
+dev\manyroads\weather\error\ApiError.class

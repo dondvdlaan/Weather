@@ -7,7 +7,7 @@ echo "update to git"
 chmod u+x git_update.sh
 
 git add .
-git commit -m "V2 Split in to microservices"
+git commit -m "V2 improved error handling"
 git push --set-upstream Weather master
 
 

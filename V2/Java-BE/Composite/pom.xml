@@ -16,6 +16,12 @@
 
   <name>Composite</name>
 
-
-
+  <dependencies>
+    <!-- shared POJOs between the microservices -->
+    <dependency>
+      <groupId>dev.manyroads</groupId>
+      <artifactId>shared</artifactId>
+      <version>1</version>
+    </dependency>
+  </dependencies>
 </project>

@@ -1,7 +1,7 @@
 package dev.manyroads.weather.controller;
 
-import dev.manyroads.weather.model.WeatherRaw;
 import dev.manyroads.weather.service.WeatherService;
+import dev.manyroads.weather.model.WeatherRaw;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 

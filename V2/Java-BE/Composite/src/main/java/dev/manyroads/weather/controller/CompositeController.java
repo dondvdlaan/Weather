@@ -1,10 +1,11 @@
 package dev.manyroads.weather.controller;
 
+import dev.manyroads.weather.constants.ApiConstants;
+import dev.manyroads.weather.service.CityService;
+import dev.manyroads.weather.service.WeatherService;
 import dev.manyroads.weather.model.City;
 import dev.manyroads.weather.model.CityWeather;
 import dev.manyroads.weather.model.WeatherRaw;
-import dev.manyroads.weather.service.CityService;
-import dev.manyroads.weather.service.WeatherService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import reactor.core.publisher.Mono;
@@ -41,33 +42,40 @@ public class CompositeController {
         // Initialise variables
         City city = new City();
         Mono<WeatherRaw> monoWeather = Mono.empty();
+        Mono<CityWeather> monoCityWeather = Mono.just(new CityWeather());
+
+        // If requested city is empty, return default CityWeather
+        if(cityName.isEmpty()) return errorCityWeather();
 
         // Get city coordinates
         try{
             city = cityService.getCityCoordinates(cityName);
         }catch(RestClientException ex){
-            logger.log(Level.SEVERE,"Foutje coordinaten ophalen");
-            //return returnDefault();
+            logger.log(Level.SEVERE,"Foutje coordinaten ophalen: " + ex.getMessage());
+            return errorCityWeather();
         }catch(Exception ex) {
-            logger.log(Level.SEVERE, "Foutje converteren JSON");
-           // return returnDefault();
+            logger.log(Level.SEVERE, "Algemene fout ophalen coordinaten: " + ex.getMessage());
+            return errorCityWeather();
             // TODO: implement rety / circuitbreaker, because the API returns often 500 error
         }
         logger.info("City aangekomen: " + city);
 
-        // Get City weather
-        try{
-            monoWeather = weatherService.getWeatherForecast(city.getLatitude(), city.getLongitude());
-        }catch(Exception ex){
-            logger.log(Level.SEVERE,"Failure retieving weather");
-            //return returnDefault();
-        }
-        monoWeather.subscribe(m-> logger.info("Goede weer aangekomen:" + m));
+        // Check if city name is not empty
+        if(!city.getName().equals(ApiConstants.DEFAULT_CITY_STRING)){
 
-        // Combine city and weather results in to CityWeather
-        City finalCity = city;
-        Mono<CityWeather> monoCityWeather = monoWeather.flatMap(m ->{
-            CityWeather cityWeather = new CityWeather();
+            // Get City weather
+            try{
+                monoWeather = weatherService.getWeatherForecast(city.getLatitude(), city.getLongitude());
+            }catch(Exception ex){
+                logger.log(Level.SEVERE,"Failure retieving weather");
+                return errorCityWeather();
+            }
+            monoWeather.subscribe(m-> logger.info("Goede weer aangekomen:" + m));
+
+            // Combine city and weather results in to CityWeather
+            City finalCity = city;
+             monoCityWeather = monoWeather.flatMap(m ->{
+                CityWeather cityWeather = new CityWeather();
                     cityWeather.setName(finalCity.getName());
                     cityWeather.setCountry(finalCity.getCountry());
                     cityWeather.setTemperature(m.getCurrent_weather().getTemperature());
@@ -75,8 +83,9 @@ public class CompositeController {
                     cityWeather.setTimezone(m.getTimezone());
                     cityWeather.setTime(m.getCurrent_weather().getTime());
 
-           return Mono.just(cityWeather);
-        });
+            return Mono.just(cityWeather);
+            });
+        }
 
         monoCityWeather.subscribe(m-> logger.info("monoCityWeather: " + m));
 
@@ -87,7 +96,8 @@ public class CompositeController {
     /*
     Method to return default Mono<CityWeather> in case of error
      */
-    Mono<CityWeather> returnDefault(){
-        return Mono.just(new CityWeather());
+    Mono<CityWeather> errorCityWeather(){
+        return Mono.error(new Error("Mono Error"));
+        //return Mono.just(new CityWeather());
     }
 }

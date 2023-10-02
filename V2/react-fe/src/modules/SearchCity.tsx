@@ -12,23 +12,46 @@ import { WeatherDetails } from "./WeatherDetails";
 const SearchCity = () =>{
   
   // ---- Constants and variables ----
+  const defaultCityWeather : CityWeather = { 
+    name: "",
+    country: "",
+    temperature: -270,
+    windspeed: -1,
+    timezone: "",    
+    time: new Date(0).toString()
+  }
+
   const [searchItem, setSearchItem]       = useState<string | undefined>("")
   const [searchResults, setSearchResults] = useState<CityWeather>();
+  const [errorMessage, setErrorMessage]   = useState<string>("");
  
+  // Define regex
+  let re = /[a-z]/;
+
   // ---- Events ----
   const onChange = (c: React.ChangeEvent<HTMLInputElement>) => {
+
+    setErrorMessage("")
 
     const inputValue = c.target.value;
     console.log("inputValue: ", inputValue)
     setSearchItem(inputValue)
     
-    CityAPI(inputValue)
-    .then(res=> {
-      console.log("cityWeather: ", res.data)
-      setSearchResults(res.data)
-    })
-    .catch(err=> console.log("err: ", err))
-    // TODO proper error message to be sent to page for user info
+    // Minimum input length required and check Regex
+    if((inputValue.length > 2) && re.test(inputValue)){
+
+      CityAPI(inputValue)
+      .then(res=> {
+        console.log("cityWeather: ", res.data)
+        setSearchResults(res.data)
+      })
+      .catch(err=> {
+        console.log("err: ", err)
+        setSearchResults(defaultCityWeather)
+        setErrorMessage("Out of order. Pls try again later.")
+      })
+      // TODO proper error message to be sent to page for user info
+    }
   }
 
   const onClick = () => {
@@ -54,6 +77,7 @@ const SearchCity = () =>{
         >
           <p> City: {searchResults?.name} </p>
         </span>
+        <span><p> {errorMessage} </p></span>
         </Box>
       </Box>
       <WeatherDetails cityWeather={searchResults }/>

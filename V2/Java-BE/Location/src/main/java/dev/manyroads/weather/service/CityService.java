@@ -3,7 +3,6 @@ package dev.manyroads.weather.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.manyroads.weather.model.City;
-import dev.manyroads.weather.model.WeatherRaw;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -21,7 +20,7 @@ import java.util.logging.Logger;
 @Service
 public class CityService {
 
-    Logger logger = Logger.getLogger(CityService.class.getName());
+    Logger logger = Logger.getLogger("Location CityService: ");
 
     String apiKey;
     String cityUrl;
@@ -66,23 +65,34 @@ public class CityService {
                     HttpMethod.GET,
                     httpEntity, String.class);
 
+            logger.info("RestTemplate response: " + response);
+            logger.info("RestTemplate response body: " + response.getBody());
+
             // Store response as JSON string
             cityJSON = response.getBody();
         }catch(RestClientException ex){
-            logger.log(Level.SEVERE,"Foutje ophalen coordinaten city: " + ex.getMessage());
-            throw new RestClientException("Foutje ophalen coordinaten city. ");
+            logger.log(Level.SEVERE,"E1 Foutje ophalen coordinaten city: " + ex.getMessage());
+            throw new RestClientException("E2 Foutje ophalen coordinaten city. ");
+        }catch(Exception ex) {
+            logger.log(Level.SEVERE, "E3 Algemene fout ophalen coordinaten city: " + ex.getMessage());
+            throw new Exception("E4 Algemene fout ophalen coordinaten city. ");
         }
-        logger.info("cityJSON: " + cityJSON);
 
-        // Convert JSON string to POJO
-        if(!cityJSON.isEmpty() ) {
+        logger.info("cityJSON: " + cityJSON);
+        logger.info("cityJSON length: " + cityJSON.length());
+
+        // Check if reply of API is not empty. If response is "[]", then no correspondent city was found
+        if(cityJSON.length() > 2 ) {
+            // Convert JSON string to POJO
             try {
                 cities = JSONmapper.readValue(cityJSON, City[].class);
-            } catch (JsonProcessingException ex) {
-                logger.log(Level.SEVERE, "JSON foutje: " + ex.getMessage());
-                throw new Exception("Foutje ophalen coordinaten city. ");
+            }
+            catch (Exception ex) {
+                logger.log(Level.SEVERE, "E5 Alg JSON foutje: " + ex.getMessage());
+                throw new Exception("E6 Alg foutje converteren JSON. ");
             }
         }
+
         logger.info("cities[0]: " + cities[0]);
 
         return cities[0];

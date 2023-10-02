@@ -1,7 +1,4 @@
-E:\Github\weather\v2\java-be\location\src\main\java\dev\manyroads\weather\model\WeatherRaw.java
-E:\Github\weather\v2\java-be\location\src\main\java\dev\manyroads\weather\model\City.java
-E:\Github\weather\v2\java-be\location\src\main\java\dev\manyroads\weather\controller\CityController.java
-E:\Github\weather\v2\java-be\location\src\main\java\dev\manyroads\weather\Main.java
-E:\Github\weather\v2\java-be\location\src\main\java\dev\manyroads\weather\model\CityWeather.java
-E:\Github\weather\v2\java-be\location\src\main\java\dev\manyroads\weather\model\Weather.java
-E:\Github\weather\v2\java-be\location\src\main\java\dev\manyroads\weather\service\CityService.java
+E:\GitHub\weather\V2\java-be\location\src\main\java\dev\manyroads\weather\error\ApiError.java
+E:\GitHub\weather\V2\java-be\location\src\main\java\dev\manyroads\weather\controller\CityController.java
+E:\GitHub\weather\V2\java-be\location\src\main\java\dev\manyroads\weather\Main.java
+E:\GitHub\weather\V2\java-be\location\src\main\java\dev\manyroads\weather\service\CityService.java
