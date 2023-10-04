@@ -24,6 +24,7 @@ public class ConditionsController {
     Method receives weather request with parameter "name" in the uri.
     Example: curl '-X' 'GET' 'http://localhost:8081/city?name=madrid'
      */
+
     @GetMapping(
             value="/conditions/{latitude}/{longitude}",
             produces = "application/json"
