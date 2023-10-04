@@ -1,6 +1,5 @@
 package dev.manyroads.weather.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.manyroads.weather.model.City;
 import org.springframework.beans.factory.annotation.Value;

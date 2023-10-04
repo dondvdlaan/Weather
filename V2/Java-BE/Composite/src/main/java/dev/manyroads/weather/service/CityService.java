@@ -39,9 +39,6 @@ public class CityService {
         logger.info("uri: " + uri);
 
         // Initialise variables
-        ArrayList cityArray = new ArrayList<>();
-        String cityJSON = "[{\"name\": \"noName\", \"latitude\": -200D, \"longitude\": -200D, \"country\": \"noCountry\", \"population\": -1, \"is_capital\": false}]";
-        ObjectMapper JSONmapper = new ObjectMapper();
         City city = new City();
 
         // Create a new synchronous RestTemplate instance

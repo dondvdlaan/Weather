@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: dev.manyroads.weather.CityTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 8.126 s <<< FAILURE! - in dev.manyroads.weather.CityTest
+testCityAPI  Time elapsed: 5.36 s  <<< ERROR!
+org.springframework.web.client.RestClientException: Foutje ophalen coordinaten city. 
+	at dev.manyroads.weather.CityTest.testCityAPI(CityTest.java:26)
+

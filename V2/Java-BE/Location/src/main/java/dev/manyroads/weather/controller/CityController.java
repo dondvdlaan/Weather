@@ -37,31 +37,8 @@ public class CityController {
 
         city = cityService.getCityCoordinates(cityName);
 
-        /*
-        // Get city coordinates
-        try{
-            city = cityService.getCityCoordinates(cityName);
-        }catch(RestClientException ex){
-            logger.log(Level.SEVERE,"Foutje coordinaten ophalen");
-            return returnDefault();
-        }catch(Exception ex) {
-            logger.log(Level.SEVERE, "Foutje converteren JSON");
-            return returnDefault();
-            // TODO: implement rety / circuitbreaker, because the API returns often 500 error
-        }
-
-         */
-
         logger.info("Returns city: " + city);
 
         return city;
-    }
-
-    // ---- Submethods ----
-    /*
-    Method to return default City in case of error
-     */
-    City returnDefault(){
-        return new City();
     }
 }
