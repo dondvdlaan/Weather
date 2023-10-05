@@ -1,0 +1,4 @@
+include 'composite'
+include 'conditions'
+include 'location'
+include 'shared'

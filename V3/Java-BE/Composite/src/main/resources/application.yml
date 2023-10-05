@@ -1,0 +1,23 @@
+# Port number of javaBE server
+server.port: 8081
+
+# Location service URL, internal microservice message, no ssl needed
+scheme: "http://"
+cityHost: "localhost:"
+weatherHost: "localhost:"
+cityPath: "/city?name="
+#cityUrl: "http://localhost:8082/city?name="
+cityPort: 8082
+
+# Conditions service URL,  internal microservice message, no ssl needed
+#weatherUrl: "http://localhost:8083/conditions"
+weatherPath: "/conditions"
+weatherPort: 8083
+
+---
+spring.config.activate.on-profile: docker
+server.port: 8080
+cityHost: "location:"
+cityPort: 8080
+weatherHost: "conditions:"
+weatherPort: 8080

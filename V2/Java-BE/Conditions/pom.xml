@@ -24,4 +24,19 @@
       <version>1</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <!-- To avoid "No Main Manifest Attribute" problem, add following plugin -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>3.1.4</version>
+        <configuration>
+          <mainClass>dev.manyroads.weather.Main</mainClass>
+          <layout>JAR</layout>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

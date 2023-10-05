@@ -1,0 +1,25 @@
+#version: '2.1'
+
+services:
+  conditions:
+    build: conditions
+    container_name: conditions
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+ 
+  location:
+    build: location
+    container_name: location
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  composite:
+    build: composite
+    container_name: composite
+    ports:
+      - 8081:8080
+    mem_limit: 512m
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker

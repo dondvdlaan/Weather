@@ -1,0 +1,9 @@
+# Port number of javaBE server
+server.port: 8083
+
+# API weather service open-meteo.com URL
+weatherUrl: "https://api.open-meteo.com/v1/forecast?"
+
+---
+spring.config.activate.on-profile: docker
+server.port: 8080
