@@ -2,6 +2,7 @@ package dev.manyroads.weather.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.manyroads.weather.model.City;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -17,14 +18,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
-public class CityService {
+public class CityService1 {
 
-    Logger logger = Logger.getLogger("Location CityService: ");
+    Logger logger = Logger.getLogger(CityService1.class.getName());
 
     String apiKey;
     String cityUrl;
 
-    public CityService(
+    public CityService1(
             @Value("${apiKey}") String apiKey,
             @Value("${cityUrl}") String cityUrl) {
         this.apiKey = apiKey;
@@ -34,6 +35,7 @@ public class CityService {
     /*
     Method to obtain the latitude and logitude coordinates from API supplier based on city name
      */
+
     public City getCityCoordinates(String cityName)
             throws RestClientException, Exception  {
 
@@ -57,7 +59,7 @@ public class CityService {
         // Compose httpEntity
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
-        try{
+        //try{
             // Make the HTTP GET request, marshaling the response to a String
             ResponseEntity<String> response = rest.exchange(
                     uri,
@@ -69,6 +71,8 @@ public class CityService {
 
             // Store response as JSON string
             cityJSON = response.getBody();
+
+            /*
         }catch(RestClientException ex){
             logger.log(Level.SEVERE,"E1 Foutje ophalen coordinaten city: " + ex.getMessage());
             throw new RestClientException("E2 Foutje ophalen coordinaten city. ");
@@ -76,6 +80,7 @@ public class CityService {
             logger.log(Level.SEVERE, "E3 Algemene fout ophalen coordinaten city: " + ex.getMessage());
             throw new Exception("E4 Algemene fout ophalen coordinaten city. ");
         }
+             */
 
         logger.info("cityJSON: " + cityJSON);
         logger.info("cityJSON length: " + cityJSON.length());

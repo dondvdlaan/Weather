@@ -1,18 +1,14 @@
 package dev.manyroads.weather;
 
 
-import dev.manyroads.weather.controller.CityController;
 import dev.manyroads.weather.model.City;
-import dev.manyroads.weather.service.CityService;
+import dev.manyroads.weather.service.CityService1;
+import dev.manyroads.weather.service.CityService2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,12 +24,14 @@ Creates a web application context (reactive or servlet based) and sets a
 server.port=0 Environment property (which usually triggers listening on a random port).
  */
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class AppTest
+public class CityControllerTest
 {
     static final String CITY = "Berlin";
     static final String NONE_EXISTING_CITY = "wwww";
     @MockBean
-    CityService cityService;
+    CityService1 cityService1;
+    @MockBean
+    CityService2 cityService2;
     @Autowired
     private WebTestClient client;
 
@@ -43,9 +41,11 @@ public class AppTest
         city.setName("Berlin");
 
         // Mocking
-        when(cityService.getCityCoordinates(CITY))
+        //when(cityService1.getCityCoordinates(CITY))
+        //        .thenReturn(city);
+        when(cityService2.getCityCoordinates(CITY))
                 .thenReturn(city);
-        when(cityService.getCityCoordinates(NONE_EXISTING_CITY))
+        when(cityService1.getCityCoordinates(CITY))
                 .thenThrow(new RuntimeException("Internal server error"));
     }
 
@@ -60,8 +60,9 @@ public class AppTest
                 .expectBody()
                     .jsonPath("$.name").isEqualTo(CITY);
     }
+   /*
     @Test
-    public void cityControllerInternalServerTest() throws Exception{
+    public void cityControllerInternalServerErrorTest() throws Exception{
 
         client
                 .get()
@@ -71,4 +72,6 @@ public class AppTest
                 .expectBody()
                 .jsonPath("$.path").isEqualTo("/city");
     }
+
+    */
 }

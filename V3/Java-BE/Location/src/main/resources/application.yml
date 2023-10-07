@@ -3,9 +3,12 @@ server.port: 8082
 
 # API city service api-ninjas.com URL
 cityUrl: "https://api.api-ninjas.com/v1/city?name="
+apiKey: "C1t26Ch1x8ajTwcwiZb2OA==SbUTy8kkFiQ4t2Ze"
+#apiKey: "C1t26Ch1x8ajTwcwiZb2OA==SbUTy8kkFiQ4t2Zd"
 
-# API key of the city service api-ninjas.com
-apiKey: "C1t26Ch1x8ajTwcwiZb2OA==SbUTy8kkFiQ4t2Zd"
+# API city service geoapify URL
+cityUrl2: "https://api.geoapify.com/v1/geocode/search?name="
+apiKey2: "3320d1ab41394f718f7ed3b4891e2dc9"
 
 ---
 spring.config.activate.on-profile: docker
