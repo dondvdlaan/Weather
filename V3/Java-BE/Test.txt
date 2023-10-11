@@ -1,0 +1,7 @@
+// Testing
+
+// Individual  modules
+- ./gradlew :cityweather:clean
+- ./gradlew :cityweather:build
+- ./gradlew :cityweather:test --tests CityWeatherTest --warning-mode=all
+

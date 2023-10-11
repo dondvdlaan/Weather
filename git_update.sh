@@ -7,7 +7,7 @@ echo "update to git"
 chmod u+x git_update.sh
 
 git add .
-git commit -m "V3 added redundant City location API"
+git commit -m "V3 added MongoDB for CityWeather"
 git push --set-upstream Weather master
 
 

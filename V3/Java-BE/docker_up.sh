@@ -9,7 +9,7 @@ chmod u+x docker_up.sh
 #./gradlew build --info
 ./gradlew build -x test
 # choose between rabbitmq or kafka
-# export COMPOSE_FILE=docker-compose-kafka.yml
+export COMPOSE_FILE=docker-compose-cityweather.yml
 docker compose build
 docker compose up -d
 #docker compose up -d --scale recommendation=3
