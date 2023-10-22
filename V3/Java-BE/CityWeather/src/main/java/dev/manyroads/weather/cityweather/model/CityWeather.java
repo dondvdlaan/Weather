@@ -1,8 +1,9 @@
-package dev.manyroads.weather.model;
+package dev.manyroads.weather.cityweather.model;
 
-import dev.manyroads.weather.constants.ApiConstants;
 
-import java.time.LocalDateTime;
+
+import dev.manyroads.weather.cityweather.constants.ApiConstants;
+
 import java.util.Date;
 
 /**

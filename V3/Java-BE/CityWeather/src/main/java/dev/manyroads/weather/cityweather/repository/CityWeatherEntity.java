@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document
+@Document(collection = "weatherreports")
 public class CityWeatherEntity {
 
     @Id
@@ -15,12 +15,12 @@ public class CityWeatherEntity {
     double temperature;
     double windspeed;
     String timezone;
-    Date time;
+    String time;
 
     public CityWeatherEntity() {
     }
 
-    public CityWeatherEntity(String name, String country, double temperature, double windspeed, String timezone, Date time) {
+    public CityWeatherEntity(String name, String country, double temperature, double windspeed, String timezone, String time) {
         this.name = name;
         this.country = country;
         this.temperature = temperature;
@@ -77,11 +77,11 @@ public class CityWeatherEntity {
         this.timezone = timezone;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

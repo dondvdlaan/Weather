@@ -1,6 +1,6 @@
-package dev.manyroads.weather.cityweather.controller;
+package dev.manyroads.weather.conditions.controller;
 
-import dev.manyroads.weather.cityweather.service.WeatherService;
+import dev.manyroads.weather.conditions.service.WeatherService;
 import dev.manyroads.weather.model.WeatherRaw;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

@@ -1,4 +1,4 @@
-package dev.manyroads.weather.cityweather.service;
+package dev.manyroads.weather.composite.service;
 
 import dev.manyroads.weather.model.City;
 import org.springframework.beans.factory.annotation.Value;

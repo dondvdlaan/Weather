@@ -1,4 +1,4 @@
-package dev.manyroads.weather.model;
+package dev.manyroads.weather.cityweather.model;
 
 import java.util.Date;
 

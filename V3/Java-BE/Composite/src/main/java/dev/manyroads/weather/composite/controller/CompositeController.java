@@ -1,8 +1,8 @@
-package dev.manyroads.weather.cityweather.controller;
+package dev.manyroads.weather.composite.controller;
 
+import dev.manyroads.weather.composite.service.CityService;
+import dev.manyroads.weather.composite.service.WeatherService;
 import dev.manyroads.weather.constants.ApiConstants;
-import dev.manyroads.weather.cityweather.service.CityService;
-import dev.manyroads.weather.cityweather.service.WeatherService;
 import dev.manyroads.weather.model.City;
 import dev.manyroads.weather.model.CityWeather;
 import dev.manyroads.weather.model.WeatherRaw;

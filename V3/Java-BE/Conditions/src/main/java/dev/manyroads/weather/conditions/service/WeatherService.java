@@ -1,4 +1,4 @@
-package dev.manyroads.weather.cityweather.service;
+package dev.manyroads.weather.conditions.service;
 
 import dev.manyroads.weather.model.WeatherRaw;
 import org.apache.logging.log4j.LogManager;

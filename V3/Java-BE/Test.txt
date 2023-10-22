@@ -5,3 +5,10 @@
 - ./gradlew :cityweather:build
 - ./gradlew :cityweather:test --tests CityWeatherTest --warning-mode=all
 
+// Individual w/o dependencies of other modules
+- ./gradlew :test --tests CityWeatherServiceTest --warning-mode=all
+
+
+curl POST -v 'http://localhost:8081/city' -H 'Content-Type: application/json' -d '{"name":"Berlin","country":"GER","temperature":20.0,"windspeed":2.0,"timezone":"GMT","time":"2023-10-12T19:08:53.644+00:00"}'
+
+

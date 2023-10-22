@@ -1,4 +1,4 @@
-package dev.manyroads.weather.cityweather.service;
+package dev.manyroads.weather.composite.service;
 
 import dev.manyroads.weather.event.Event;
 import dev.manyroads.weather.model.City;
@@ -11,6 +11,7 @@ import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 
@@ -57,8 +58,8 @@ public class WeatherService {
     }
 
     /*
-    Methode to obtain the weather conditions of a city based on the latitude and logitude coordinates
-     */
+        Methode to obtain the weather conditions of a city based on the latitude and logitude coordinates
+         */
     public Mono<WeatherRaw> getWeatherForecast (double latitude, double longitude)
             throws Exception{
 
@@ -69,27 +70,18 @@ public class WeatherService {
         String weatherUri = weatherUrl + "/" + latitude + "/" + longitude;
         logger.info("weatherUri: " + weatherUri);
 
-        // Prepare City DTO
-        City city = new City();
-                city.setLatitude(latitude);
-                city.setLongitude(longitude);
-
         // Initialise variables
-        Mono<WeatherRaw> monoWeatherRaw = Mono.fromCallable(()->{
+        Mono<WeatherRaw> monoWeatherRaw = Mono.empty();
 
-            sendMessage("conditions-out-0",new Event(GET,"noKey",city));
-        })
-
-        /*
         // Compose asynchronous webClient
         WebClient webClient = WebClient.create(weatherUri);
 
         try {
-
+            /*
             RestTemplate request = new RestTemplate();
             ResponseEntity<WeatherRaw> res = request.getForEntity(uri,WeatherRaw.class);
             System.out.println("res.getBody(): " + res.getBody().getCurrent_weather().getTemperature());
-
+            */
             monoWeatherRaw = webClient
                     .get()
                     .retrieve()
@@ -98,8 +90,6 @@ public class WeatherService {
             logger.error("Weblient failt: " + ex.getMessage());
             throw new Exception("");
         }
-        */
-
         // Print
         monoWeatherRaw.subscribe(m-> logger.info("monoWeatherRaw: " + m));
 

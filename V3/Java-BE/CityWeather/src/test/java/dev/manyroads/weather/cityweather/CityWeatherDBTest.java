@@ -1,37 +1,27 @@
 package dev.manyroads.weather.cityweather;
 
-
 import dev.manyroads.weather.cityweather.repository.CityWeatherEntity;
 import dev.manyroads.weather.cityweather.repository.CityWeatherRepository;
-import dev.manyroads.weather.model.City;
 import dev.manyroads.weather.cityweather.service.CityWeatherService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /*
-Creates a web application context (reactive or servlet based) and sets a
-server.port=0 Environment property (which usually triggers listening on a random port).
+Starts MongoDB testcontainer MongoDbTestBase, to test with single Docker container, but without Netty server.
+You can start test class in the IDE or at the bash prompt:
+./gradlew :cityweather:test --tests CityWeatherTest --warning-mode=all
  */
-//@SpringBootTest(webEnvironment = RANDOM_PORT)
-
-// Starts MongoDB testcontainer MongoDbTestBase, to test with single Docker container, but without Netty server
 @DataMongoTest
-public class CityWeatherTest extends MongoDbTestBase
+public class CityWeatherDBTest extends MongoDbTestBase
 {
     @Autowired
     CityWeatherRepository cityWeatherRepository;
@@ -45,12 +35,18 @@ public class CityWeatherTest extends MongoDbTestBase
         Basic test to see if MongoDB is working
          */
         CityWeatherEntity cityWeatherEntity = new CityWeatherEntity(
-                "Berlin","GER",20.1D,1.6D,"GMT",new Date()
+                "Berlin","GER",20.1D,1.6D,"GMT",new Date().toString()
         );
 
-        StepVerifier.create(cityWeatherRepository.save(cityWeatherEntity))
+        Mono<CityWeatherEntity> mono = cityWeatherRepository.save(cityWeatherEntity);
+
+        //assertNotNull(cityWeatherRepository.findByName("Berlin").block());
+        //Assertions.assertEquals(1, (long)cityWeatherRepository.count().block());
+
+        StepVerifier.create(mono)
                 .expectNextMatches(createdEnity -> {
-                    return createdEnity.getCityWeatherID() == cityWeatherEntity.getCityWeatherID();
+                    return createdEnity.getCityWeatherID() == cityWeatherEntity.getCityWeatherID() &&
+                           createdEnity.getName().equals(cityWeatherEntity.getName()) ;
                 })
                 .verifyComplete();
     }
@@ -59,7 +55,7 @@ public class CityWeatherTest extends MongoDbTestBase
     public void cityWeatherRepositoryTest() throws Exception {
 
         CityWeatherEntity cityWeatherEntity = new CityWeatherEntity(
-                "Paris","FR",19.1D,1.0D,"GMT",new Date()
+                "Paris","FR",19.1D,1.0D,"GMT",new Date().toString()
         );
 
         StepVerifier.create(
@@ -83,28 +79,8 @@ public class CityWeatherTest extends MongoDbTestBase
                 );
     }
 
-
-/*
-        client
-                .get()
-                .uri("/city?name=" + CITY)
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody()
-                    .jsonPath("$.name").isEqualTo(CITY);
-    }
-
     @Test
-    public void cityControllerInternalServerErrorTest() throws Exception{
+    public void saveCityWeatherToDBTest() {
 
-        client
-                .get()
-                .uri("/city?name=" + NONE_EXISTING_CITY)
-                .exchange()
-                .expectStatus().is5xxServerError()
-                .expectBody()
-                .jsonPath("$.path").isEqualTo("/city");
     }
-
-    */
 }
