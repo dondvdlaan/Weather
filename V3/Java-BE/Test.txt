@@ -9,6 +9,7 @@
 - ./gradlew :test --tests CityWeatherServiceTest --warning-mode=all
 
 
-curl POST -v 'http://localhost:8081/city' -H 'Content-Type: application/json' -d '{"name":"Berlin","country":"GER","temperature":20.0,"windspeed":2.0,"timezone":"GMT","time":"2023-10-12T19:08:53.644+00:00"}'
+body='{"name":"Berlin","country":"GER","temperature":20.0,"windspeed":2.0,"timezone":"GMT","time":"2023-10-12T19:08:53.644+00:00"}'
 
+curl -X POST 'http://localhost:8081/storeCity' -v -H 'Content-Type: application/json' --data "$body"
 

@@ -1,7 +1,7 @@
 package dev.manyroads.weather;
 
 
-import dev.manyroads.weather.model.City;
+import dev.manyroads.weather.shared.model.City;
 import dev.manyroads.weather.cityweather.service.CityService1;
 import dev.manyroads.weather.cityweather.service.CityService2;
 import org.junit.jupiter.api.BeforeEach;

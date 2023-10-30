@@ -1,6 +1,6 @@
 package dev.manyroads.weather.conditions.service;
 
-import dev.manyroads.weather.model.WeatherRaw;
+import dev.manyroads.weather.shared.model.WeatherRaw;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;

@@ -6,7 +6,6 @@ scheme: "http://"
 cityHost: "localhost:"
 weatherHost: "localhost:"
 cityPath: "/city?name="
-#cityUrl: "http://localhost:8082/city?name="
 cityPort: 8082
 
 # Conditions service URL,  internal microservice message, no ssl needed
@@ -14,21 +13,16 @@ cityPort: 8082
 weatherPath: "/conditions"
 weatherPort: 8083
 
-# Set up KAFKA stream for conditions. Biding name is functionname -in- index
+# Set up KAFKA stream for cityweather. Biding name is functionname -in- index
 spring.cloud.stream:
   defaultBinder: kafka
   default.contentType: application/json
   bindings:
-    conditions-out-0:
-      destination: conditions
-      group: conditionsGroup
+    cityweather-out-0:
+      destination: cityweather
+      group: cityweatherGroup
 
-# Connectivity data for KAFKA
-spring.cloud.stream.kafka.binder:
-  brokers: 127.0.0.1
-  defaultBrokerPort: 9092
-
-#Failing messages are move to Dead Letter Queue (DLQ)
+#Failing messages are moved to Dead Letter Queue (DLQ)
 spring.cloud.stream.kafka.bindings.messageProcessor-in-0.consumer:
   enableDlq: true
 
@@ -42,5 +36,6 @@ cityPort: 8080
 weatherHost: "conditions:"
 weatherPort: 8080
 
+#spring.cloud.stream.defaultBinder: kafka
 spring.kafka.bootstrap-servers: kafka:9092
 spring.cloud.stream.kafka.binder.replication-factor: 1

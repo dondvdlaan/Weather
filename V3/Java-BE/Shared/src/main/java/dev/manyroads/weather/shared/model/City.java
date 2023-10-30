@@ -1,7 +1,6 @@
-package dev.manyroads.weather.cityweather.model;
+package dev.manyroads.weather.shared.model;
 
-
-import dev.manyroads.weather.cityweather.constants.ApiConstants;
+import dev.manyroads.weather.shared.constants.ApiConstants;
 
 /**
  * Model City is interface or DTO with the API for obtaining the latitude and longitude city coordinates

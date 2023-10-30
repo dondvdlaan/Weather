@@ -1,6 +1,6 @@
 package dev.manyroads.weather.composite.service;
 
-import dev.manyroads.weather.model.City;
+import dev.manyroads.weather.shared.model.City;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;

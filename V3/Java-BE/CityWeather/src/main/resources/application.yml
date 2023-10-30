@@ -8,10 +8,19 @@ spring.data.mongodb:
 
 spring.cloud.function.definition: messageProcessor
 
+spring.cloud.stream:
+  defaultBinder: kafka
+  default.contentType: application/json
+  bindings:
+    messageProcessor-in-0:
+      destination: cityweather
+
 ---
 spring.config.activate.on-profile: docker
 
 server.port: 8080
 
 spring.data.mongodb.host: mongodb
+
+spring.kafka.bootstrap-servers: kafka:9092
 

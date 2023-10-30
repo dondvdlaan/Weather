@@ -1,7 +1,7 @@
 package dev.manyroads.weather.cityweather.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.manyroads.weather.model.City;
+import dev.manyroads.weather.shared.model.City;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

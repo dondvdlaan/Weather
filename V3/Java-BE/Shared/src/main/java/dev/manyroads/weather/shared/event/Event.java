@@ -1,4 +1,4 @@
-package dev.manyroads.weather.cityweather.model;
+package dev.manyroads.weather.shared.event;
 
 public class Event <K, V> {
 
@@ -6,28 +6,28 @@ public class Event <K, V> {
         Save,
         Delete
     }
-    Type type;
+    Type eventType;
     K eventID;
     V data;
 
     public Event() {
-        this.type = null;
+        this.eventType = null;
         this.eventID = null;
         this.data = null;
     }
 
     public Event(Type type, K eventID, V data) {
-        this.type = type;
+        this.eventType = type;
         this.eventID = eventID;
         this.data = data;
     }
 
-    public Type getType() {
-        return type;
+    public Type getEventType() {
+        return eventType;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setEventType(Type eventType) {
+        this.eventType = eventType;
     }
 
     public K getEventID() {
@@ -49,7 +49,7 @@ public class Event <K, V> {
     @Override
     public String toString() {
         return "Event{" +
-                "type=" + type +
+                "type=" + eventType +
                 ", eventID=" + eventID +
                 ", data=" + data +
                 '}';

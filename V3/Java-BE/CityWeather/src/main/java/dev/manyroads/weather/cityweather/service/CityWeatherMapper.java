@@ -1,8 +1,8 @@
 package dev.manyroads.weather.cityweather.service;
 
-import dev.manyroads.weather.cityweather.model.CityWeather;
 import dev.manyroads.weather.cityweather.repository.CityWeatherEntity;
 
+import dev.manyroads.weather.shared.model.CityWeather;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

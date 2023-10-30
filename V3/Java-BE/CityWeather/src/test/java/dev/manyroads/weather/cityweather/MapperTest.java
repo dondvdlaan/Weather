@@ -1,9 +1,9 @@
 package dev.manyroads.weather.cityweather;
 
-import dev.manyroads.weather.cityweather.model.CityWeather;
 import dev.manyroads.weather.cityweather.repository.CityWeatherEntity;
 import dev.manyroads.weather.cityweather.service.CityWeatherMapper;
 
+import dev.manyroads.weather.shared.model.CityWeather;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 

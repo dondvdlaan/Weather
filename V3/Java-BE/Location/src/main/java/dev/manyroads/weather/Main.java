@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Main
 {
     // Creating a logger
-    private static Logger logger = LogManager.getLogger(Main.class.getName());
+    private static Logger logger = LogManager.getLogger(dev.manyroads.weather.shared.Main.class.getName());
 
     public static void main( String[] args )
     {
-        SpringApplication.run(Main.class, args);
+        SpringApplication.run(dev.manyroads.weather.shared.Main.class, args);
     }
 }

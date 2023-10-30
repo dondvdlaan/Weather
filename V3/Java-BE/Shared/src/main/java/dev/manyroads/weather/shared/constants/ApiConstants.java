@@ -1,4 +1,4 @@
-package dev.manyroads.weather.constants;
+package dev.manyroads.weather.shared.constants;
 
 public class ApiConstants {
 

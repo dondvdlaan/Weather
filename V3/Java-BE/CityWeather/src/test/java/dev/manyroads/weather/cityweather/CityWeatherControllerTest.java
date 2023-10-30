@@ -1,20 +1,13 @@
 package dev.manyroads.weather.cityweather;
 
-import dev.manyroads.weather.cityweather.model.CityWeather;
 import dev.manyroads.weather.cityweather.service.CityWeatherService;
-import org.junit.jupiter.api.BeforeEach;
+import dev.manyroads.weather.shared.model.CityWeather;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.reactive.server.EntityExchangeResult;
-import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
-
-import static reactor.core.publisher.Mono.just;
 
 import java.util.Date;
 

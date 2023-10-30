@@ -1,7 +1,7 @@
 package dev.manyroads.weather.cityweather.util;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import dev.manyroads.weather.constants.ApiConstants;
+import dev.manyroads.weather.shared.constants.ApiConstants;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class City2 {

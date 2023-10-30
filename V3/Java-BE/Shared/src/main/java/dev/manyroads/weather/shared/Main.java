@@ -1,4 +1,4 @@
-package dev.manyroads.weather;
+package dev.manyroads.weather.shared;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

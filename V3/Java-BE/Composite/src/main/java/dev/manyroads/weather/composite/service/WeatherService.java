@@ -1,21 +1,12 @@
 package dev.manyroads.weather.composite.service;
 
-import dev.manyroads.weather.event.Event;
-import dev.manyroads.weather.model.City;
-import dev.manyroads.weather.model.WeatherRaw;
-import org.apache.logging.log4j.Level;
+import dev.manyroads.weather.shared.model.WeatherRaw;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
-
-import static dev.manyroads.weather.event.Event.Type.GET;
 
 @Service
 public class WeatherService {
@@ -27,10 +18,6 @@ public class WeatherService {
     String weatherPort;
     String weatherPath;
     String weatherUrl;
-    //Spring Streambridge, message is published to processor
-    private final StreamBridge streamBridge;
-    // Reactor scheduler, provides thread for Streambridge
-    private final Scheduler publishEventScheduler;
 
     static String latitude = "latitude=";
     static String longitude = "&longitude=";
@@ -42,16 +29,12 @@ public class WeatherService {
             @Value("${scheme}") String scheme,
             @Value("${weatherHost}") String weatherHost,
             @Value("${weatherPort}") String weatherPort,
-            @Value("${weatherPath}") String weatherPath,
-            StreamBridge streamBridge,
-            Scheduler publishEventScheduler
+            @Value("${weatherPath}") String weatherPath
     ) {
         this.scheme = scheme;
         this.weatherHost = weatherHost;
         this.weatherPort = weatherPort;
         this.weatherPath = weatherPath;
-        this.streamBridge = streamBridge;
-        this.publishEventScheduler = publishEventScheduler;
 
         // Compose URL
         weatherUrl = scheme + weatherHost + weatherPort + weatherPath;
@@ -60,8 +43,8 @@ public class WeatherService {
     /*
         Methode to obtain the weather conditions of a city based on the latitude and logitude coordinates
          */
-    public Mono<WeatherRaw> getWeatherForecast (double latitude, double longitude)
-            throws Exception{
+    public Mono<WeatherRaw> getWeatherForecast(double latitude, double longitude)
+            throws Exception {
 
         /*
         Compose uri:
@@ -77,37 +60,21 @@ public class WeatherService {
         WebClient webClient = WebClient.create(weatherUri);
 
         try {
-            /*
-            RestTemplate request = new RestTemplate();
-            ResponseEntity<WeatherRaw> res = request.getForEntity(uri,WeatherRaw.class);
-            System.out.println("res.getBody(): " + res.getBody().getCurrent_weather().getTemperature());
-            */
             monoWeatherRaw = webClient
                     .get()
                     .retrieve()
                     .bodyToMono(WeatherRaw.class);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             logger.error("Weblient failt: " + ex.getMessage());
             throw new Exception("");
         }
         // Print
-        monoWeatherRaw.subscribe(m-> logger.info("monoWeatherRaw: " + m));
+        monoWeatherRaw.subscribe(m -> logger.info("monoWeatherRaw: " + m));
 
         return monoWeatherRaw;
     }
     // ---- Sub-methods ----
-    /*
-    Methode to prepare message and hand it over to streamBridge
-     */
-    private void sendMessage(String bindingName, Event event) {
 
-        logger.log(Level.DEBUG, "Sending a " + event.getType() + " message to " + bindingName);
-
-        Message message = MessageBuilder.withPayload(event)
-                .setHeader("partitionKey", event.getKey())
-                .build();
-        streamBridge.send(bindingName, message);
-    }
 }
 
 

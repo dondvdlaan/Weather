@@ -1,14 +1,11 @@
 package dev.manyroads.weather.cityweather;
 
-import dev.manyroads.weather.cityweather.model.CityWeather;
-import dev.manyroads.weather.cityweather.model.Event;
 import dev.manyroads.weather.cityweather.repository.CityWeatherRepository;
 import dev.manyroads.weather.cityweather.service.CityWeatherService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import dev.manyroads.weather.shared.model.CityWeather;
+import dev.manyroads.weather.shared.event.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;

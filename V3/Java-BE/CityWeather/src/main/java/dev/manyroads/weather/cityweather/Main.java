@@ -29,9 +29,9 @@ public class Main implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
-        logger.info("Filling DB");
 /*
+        logger.info("Filling DB");
+
         Thread.sleep(5000);
 
         repo.save(new CityWeatherEntity(

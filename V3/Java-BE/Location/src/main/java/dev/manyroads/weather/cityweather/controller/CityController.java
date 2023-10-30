@@ -1,7 +1,7 @@
 package dev.manyroads.weather.cityweather.controller;
 
 import dev.manyroads.weather.cityweather.service.CityService1;
-import dev.manyroads.weather.model.City;
+import dev.manyroads.weather.shared.model.City;
 import dev.manyroads.weather.cityweather.service.CityService2;
 import dev.manyroads.weather.cityweather.util.ResetBackupCityService;
 import org.springframework.web.bind.annotation.*;

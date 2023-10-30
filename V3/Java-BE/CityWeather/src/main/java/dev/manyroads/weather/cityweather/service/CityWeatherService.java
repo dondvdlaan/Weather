@@ -1,9 +1,9 @@
 package dev.manyroads.weather.cityweather.service;
 
-import dev.manyroads.weather.cityweather.model.CityWeather;
 import dev.manyroads.weather.cityweather.repository.CityWeatherRepository;
 
 
+import dev.manyroads.weather.shared.model.CityWeather;
 import org.springframework.stereotype.Service;
 
 import reactor.core.publisher.Flux;
@@ -29,6 +29,7 @@ public class CityWeatherService {
      */
     public Mono<CityWeather> saveCityWeather(CityWeather cityWeather)
     {
+        logger.info("In saveCityWeather: " + cityWeather);
         return cityWeatherRepository.save(cityWeatherMapper.apiToEntity(cityWeather))
                 .log()
                 .map(e-> cityWeatherMapper.entityToApi(e));

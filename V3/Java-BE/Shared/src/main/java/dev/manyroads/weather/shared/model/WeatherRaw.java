@@ -1,4 +1,4 @@
-package dev.manyroads.weather.model;
+package dev.manyroads.weather.shared.model;
 
 /**
  * Model WeatherRaw is interface or DTO with the API for obtaining the weather conditions based of the

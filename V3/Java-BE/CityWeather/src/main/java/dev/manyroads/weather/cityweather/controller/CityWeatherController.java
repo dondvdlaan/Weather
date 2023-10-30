@@ -1,10 +1,10 @@
 package dev.manyroads.weather.cityweather.controller;
 
-import dev.manyroads.weather.cityweather.model.CityWeather;
 import dev.manyroads.weather.cityweather.repository.CityWeatherEntity;
 import dev.manyroads.weather.cityweather.repository.CityWeatherRepository;
 import dev.manyroads.weather.cityweather.service.CityWeatherMapper;
 import dev.manyroads.weather.cityweather.service.CityWeatherService;
+import dev.manyroads.weather.shared.model.CityWeather;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import reactor.core.publisher.Flux;

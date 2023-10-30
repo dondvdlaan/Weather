@@ -1,8 +1,6 @@
-package dev.manyroads.weather.cityweather.model;
+package dev.manyroads.weather.shared.model;
 
-
-
-import dev.manyroads.weather.cityweather.constants.ApiConstants;
+import dev.manyroads.weather.shared.constants.ApiConstants;
 
 import java.util.Date;
 
