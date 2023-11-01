@@ -49,7 +49,7 @@ public class CityService {
 
         // Compose uri
         String uri = cityUrl + cityName;
-        logger.info("uri: " + uri);
+        logger.info("*** Composing uri: " + uri + " ***");
 
         // Initialise variables
         City city = new City();
@@ -64,6 +64,7 @@ public class CityService {
         // Compose httpEntity
         HttpEntity<City> httpEntity = new HttpEntity<>(headers);
 
+        logger.info("*** Composing uri: " + uri + " ***");
         try{
             // Make the HTTP GET request, marshaling the response to a City
             ResponseEntity<City> response = rest.exchange(

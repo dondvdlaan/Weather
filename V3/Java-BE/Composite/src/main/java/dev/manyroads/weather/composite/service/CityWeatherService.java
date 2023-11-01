@@ -98,9 +98,13 @@ public class CityWeatherService {
 
     /**
      * Retrieve trend data for city
-     * @return
+     *
+     * @param cityName  : City for which trending is requested
+     * @return  Flux    : Trend data for city
      */
     public Flux<CityWeather> getTrendCityWeather(String cityName){
+
+
 
         return Flux.just(new CityWeather());
     }

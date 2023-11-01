@@ -1,7 +1,7 @@
-package dev.manyroads.weather.cityweather.service;
+package dev.manyroads.weather.location.service;
 
-import dev.manyroads.weather.cityweather.model.CityWeather;
-import dev.manyroads.weather.cityweather.repository.CityWeatherEntity;
+import dev.manyroads.weather.location.model.CityWeather;
+import dev.manyroads.weather.location.repository.CityWeatherEntity;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 

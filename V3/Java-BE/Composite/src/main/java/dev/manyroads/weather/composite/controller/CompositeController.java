@@ -1,20 +1,24 @@
 package dev.manyroads.weather.composite.controller;
 
+import dev.manyroads.weather.composite.scheduler.CityWeatherTrending;
 import dev.manyroads.weather.composite.service.CityWeatherService;
 import dev.manyroads.weather.shared.model.CityWeather;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.logging.Logger;
 
+/**
+ * Class CompositeController receives signals from Front End for CityWeather requests
+ */
 @RestController
 @CrossOrigin
 public class CompositeController {
 
-    Logger logger = Logger.getLogger(CompositeController.class.getName());
+    private static Logger logger = Logger.getLogger(CompositeController.class.getName());
 
-    private static boolean schedulerStarted;
     CityWeatherService cityWeatherService;
 
     public CompositeController(CityWeatherService cityWeatherService) {
@@ -22,14 +26,15 @@ public class CompositeController {
     }
 
     /*
-            Method receives weather request for city with parameter "name" in the uri.
-            Example: curl '-X' 'GET' 'http://localhost:8081/city?name=madrid'
-             */
+    Method receives weather request for city with parameter "name" in the uri.
+    Example: curl '-X' 'GET' 'http://localhost:8081/city?name=madrid'
+    return
+    */
     @GetMapping(
-            value="/city",
+            value = "/city",
             produces = "application/json"
     )
-    public Mono<CityWeather> getCityWeather(@RequestParam( value = "name") String cityName){
+    public Mono<CityWeather> getCityWeather(@RequestParam(value = "name") String cityName) {
 
         logger.info("cityName: " + cityName);
 
@@ -37,43 +42,53 @@ public class CompositeController {
     }
 
     /**
-     *
-     * @param cityName
-     * @return
+     * Method receives weather trend request for city with parameter "name" in the uri.
+     *     Example: curl '-X' 'GET' 'http://localhost:8081/cityTrend?name=madrid'
+     * @param cityName  : City name
+     * @return Flux     : Stream of CityWeather trend
      */
-    public Flux<CityWeather> getTrendCityWeather(@RequestParam( value = "name") String cityName){
+    @GetMapping(
+            value = "/cityTrend",
+            produces = "application/json"
+    )
+    public Flux<CityWeather> getTrendCityWeather(@RequestParam(value = "name") String cityName) {
 
-        logger.info("cityName: " + cityName);
-
-        // Start scheduler
-        if(!schedulerStarted){
-
-        }
+        logger.info("cityTrend cityName: " + cityName);
 
         return cityWeatherService.getTrendCityWeather(cityName);
     }
 
+    // ********* Testing *********
     @PostMapping("/storeCity")
-    public Mono<CityWeather> createCityWeather(@RequestBody CityWeather cityWeather){
+    public Mono<CityWeather> createCityWeather(@RequestBody CityWeather cityWeather) {
 
         logger.info("cityWeather: " + cityWeather);
 
-    return cityWeatherService.storeCityWeather(cityWeather);
+        return cityWeatherService.storeCityWeather(cityWeather);
     }
 
-    // Testing
     @PostMapping("/test")
-    public String test(@RequestBody String body)
-    {
-    return "Holita " + body;
+    public String test1(@RequestBody String body) {
+        return "Holita " + body;
     }
+    // ********* END testing *********
 
-    @GetMapping("/getTest")
-    public String test()
-    {
-        return "Holita ";
+    /**
+     * Methode received City name to start trending of CityWeather
+     * @param cityName  : City to be trended to DB
+     * @return          : Confirmation scheduler started
+     */
+    @PostMapping("/startTrend")
+    public ResponseEntity startTrending(@RequestBody String cityName) {
+
+        // Stop trending
+        CityWeatherTrending.setTrendStarted(false);
+        // Communicate CityNmae and start trending to CityWeatherTrending
+        CityWeatherTrending.setCityName(cityName);
+        CityWeatherTrending.setTrendStarted(true);
+
+        return ResponseEntity.ok("Scheduler started: " + cityName);
     }
-    // END testing
 
     // ---- Submethods ----
 

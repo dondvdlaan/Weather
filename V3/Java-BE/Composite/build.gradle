@@ -26,6 +26,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
 
+	implementation 'org.quartz-scheduler:quartz:2.3.2'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	//testImplementation 'org.springframework.cloud:spring-cloud-stream::test-binder'
 	testImplementation 'io.projectreactor:reactor-test'

@@ -2,8 +2,8 @@ package dev.manyroads.weather;
 
 
 import dev.manyroads.weather.shared.model.City;
-import dev.manyroads.weather.cityweather.service.CityService1;
-import dev.manyroads.weather.cityweather.service.CityService2;
+import dev.manyroads.weather.location.service.CityService1;
+import dev.manyroads.weather.location.service.CityService2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

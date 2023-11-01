@@ -3,6 +3,8 @@
 // Individual  modules
 - ./gradlew :cityweather:clean
 - ./gradlew :cityweather:build
+- ./gradlew :cityweather:build -x test                                      // excluding test
+- ./gradlew :cityweather:bootRun
 - ./gradlew :cityweather:test --tests CityWeatherTest --warning-mode=all
 
 // Individual w/o dependencies of other modules
