@@ -21,6 +21,8 @@ public class CityWeatherTrending  {
     // City name is set by the CompositeController startTrending methode
     private static String cityName = "noCityName";
 
+    private final int schedulerRate = 30000;
+
     CityWeatherService cityWeatherService;
 
     public CityWeatherTrending(CityWeatherService cityWeatherService) {
@@ -38,12 +40,15 @@ public class CityWeatherTrending  {
     /**
      * Method trending is triggered every x s (fixedrate)
      */
-    @Scheduled(fixedRate = 10000)
+    //once an hour, (0 0 * * * *)
+    //@Scheduled(cron="0 0 * * * *")
+    //@Scheduled(cron= "@hourly")
+    @Scheduled(cron="* 30 * * * *")
     public void trending() {
 
         log.info("------- Checks for Start Signal from CompositeController -------------------");
-        log.debug(" ------- Start Signal: " + trendStarted);
-        log.debug(" ------- City name: " + cityName);
+        log.info(" ------- Start Signal: " + trendStarted);
+        log.info(" ------- City name: " + cityName);
 
         if(trendStarted){
 

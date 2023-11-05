@@ -1,17 +1,24 @@
 # Port number of javaBE server
 server.port: 8081
 
-# Location service URL, internal microservice message, no ssl needed
+# Generic scheme
 scheme: "http://"
+
+# Location service URL, internal microservice message, no ssl needed
 cityHost: "localhost:"
-weatherHost: "localhost:"
 cityPath: "/city?name="
 cityPort: 8082
 
 # Conditions service URL,  internal microservice message, no ssl needed
 #weatherUrl: "http://localhost:8083/conditions"
+weatherHost: "localhost:"
 weatherPath: "/conditions"
 weatherPort: 8083
+
+# CityWeather service URL,  internal microservice message, no ssl needed
+cityWeatherHost: "localhost:"
+cityWeatherPath: "/getTrend"
+cityWeatherPort: 8084
 
 # Set up KAFKA stream for cityweather. Biding name is functionname -in- index
 spring.cloud.stream:
@@ -35,6 +42,8 @@ cityHost: "location:"
 cityPort: 8080
 weatherHost: "conditions:"
 weatherPort: 8080
+cityWeatherHost: "cityweather:"
+cityWeatherPort: 8080
 
 #spring.cloud.stream.defaultBinder: kafka
 spring.kafka.bootstrap-servers: kafka:9092

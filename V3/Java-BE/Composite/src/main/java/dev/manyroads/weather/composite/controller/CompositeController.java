@@ -2,6 +2,7 @@ package dev.manyroads.weather.composite.controller;
 
 import dev.manyroads.weather.composite.scheduler.CityWeatherTrending;
 import dev.manyroads.weather.composite.service.CityWeatherService;
+import dev.manyroads.weather.shared.model.CityName;
 import dev.manyroads.weather.shared.model.CityWeather;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -78,13 +79,17 @@ public class CompositeController {
      * @param cityName  : City to be trended to DB
      * @return          : Confirmation scheduler started
      */
-    @PostMapping("/startTrend")
-    public ResponseEntity startTrending(@RequestBody String cityName) {
+    @PostMapping(
+            value = "/startTrend",
+            consumes = "application/json")
+    public ResponseEntity startTrending(@RequestBody CityName cityName) {
+
+        logger.info("startTrending -> cityName: " + cityName.getCityName());
 
         // Stop trending
         CityWeatherTrending.setTrendStarted(false);
         // Communicate CityNmae and start trending to CityWeatherTrending
-        CityWeatherTrending.setCityName(cityName);
+        CityWeatherTrending.setCityName(cityName.getCityName());
         CityWeatherTrending.setTrendStarted(true);
 
         return ResponseEntity.ok("Scheduler started: " + cityName);

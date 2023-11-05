@@ -35,7 +35,8 @@ public class CityWeatherController {
 
     /**
      * Method saveCityWeather stores CityWeather to DB
-     * @param cityWeather           : CityWeather to be stored
+     *
+     * @param cityWeather : CityWeather to be stored
      * @return Mono<CityWeather>    : Confirmation of stored CityWeather
      * @throws RestClientException
      * @throws Exception
@@ -54,41 +55,51 @@ public class CityWeatherController {
 
     /**
      * Method retrieveAllCityWeather to retrieve all CityWeather stored in DB
+     *
      * @return
      */
     @GetMapping("/retrieve")
-    public Flux<CityWeather> retrieveAllCityWeather(){
+    public Flux<CityWeather> retrieveAllCityWeather() {
 
         logger.info("Retrieving all CityWeather: ");
 
         return cityWeatherService.retrieveCityWeather();
     }
-    @GetMapping("/get/{name}")
-    public Flux<CityWeather> getCityWeatherByName(@PathVariable String name){
 
-        logger.info("Retrieving CityWeather: ");
+    /**
+     * Method getCityWeatherByName to retrieve trend of CityWeather by city name
+     * Example: curl '-X' 'GET' 'http://localhost:8081/getTrend/madrid'
+     *
+     * @param name : City name
+     * @return Fluy : Flux of trend data
+     */
+    @GetMapping("/getTrend/{name}")
+    public Flux<CityWeather> getCityWeatherByName(@PathVariable String name) {
+
+        logger.info("Retrieving Trend CityWeather for: " + name);
 
         return cityWeatherService.getCityWeatherByName(name);
     }
 
+    // ***** Testing *****
     @GetMapping("/add")
-    public Mono<CityWeatherEntity> adRecord(){
+    public Mono<CityWeatherEntity> adRecord() {
 
         logger.info("In adRecord: ");
 
         return cityWeatherRepository.save(new CityWeatherEntity(
-                "Adam","NL",20.1D,1.6D,"GMT", new Date().toString()));
+                "Adam", "NL", 20.1D, 1.6D, "GMT", new Date().toString()));
     }
+
     @GetMapping("/test")
-    public String testController(){
+    public String testController() {
 
         logger.info("In test: ");
 
         return "niksTeZein";
     }
+    // ***** END Testing *****
 
     // --- Sub-methods ---
-
-
 
 }

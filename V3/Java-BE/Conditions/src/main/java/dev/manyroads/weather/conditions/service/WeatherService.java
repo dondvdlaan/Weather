@@ -46,18 +46,14 @@ public class WeatherService {
         WebClient webClient = WebClient.create(weatherUri);
 
         try {
-            /*
-            RestTemplate request = new RestTemplate();
-            ResponseEntity<WeatherRaw> res = request.getForEntity(uri,WeatherRaw.class);
-            System.out.println("res.getBody(): " + res.getBody().getCurrent_weather().getTemperature());
-            */
             monoWeatherRaw = webClient
                     .get()
                     .retrieve()
                     .bodyToMono(WeatherRaw.class);
         } catch(Exception ex) {
             logger.error("Weblient failt: " + ex.getMessage());
-            throw new Exception("");
+            //throw new Exception("");
+            return monoWeatherRaw;
         }
         // Print
         monoWeatherRaw.subscribe(m-> logger.info("Mono: " + m));
