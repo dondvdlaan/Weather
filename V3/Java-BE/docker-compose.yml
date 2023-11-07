@@ -39,7 +39,7 @@ services:
     build: composite
     container_name: composite
     ports:
-      - 8081:8080
+      - 8443:8443
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker

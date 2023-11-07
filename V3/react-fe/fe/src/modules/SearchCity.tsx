@@ -15,8 +15,10 @@ const SearchCity = () => {
   const [searchItem, setSearchItem] = useState<string | undefined>("")
   const [searchResults, setSearchResults] = useState<CityWeather>();
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [trendTimer, setTrendTimer] = useState<NodeJS.Timeout>()
+  const [trendTimer, setTrendTimer] = useState<number>()
   const [startTrend, setStartTrend] = useState<boolean>(false)
+
+  console.log("DEBUG searchItem: " + searchItem + " " + new Date().toTimeString())
 
   const defaultCityWeather: CityWeather = {
     name: "",
@@ -34,12 +36,15 @@ const SearchCity = () => {
   const START_TREND_TIMEOUT = process.env.REACT_APP_START_TREND_TIMEOUT || 1
 
   // ---- Functions ----
-  const startTrending = () => {
+  const startTrending = (inputValue: any) => {
 
-    // Tell back end to start trending
+    console.log("searchItem before if : ", searchItem, " " + new Date().toTimeString())
+
+    // Start BE trending
     if (searchItem) {
-      console.log("searchItem: ", searchItem)
-      CityAPI("POST", "startTrend", "", {"cityName":searchItem})
+      console.log("inputValue after if: ", inputValue, " " + new Date().toTimeString())
+
+      CityAPI("POST", "startTrend", "", { "cityName": inputValue })
         .then(res => {
           console.log("startTrend: ", res.data)
         })
@@ -49,7 +54,7 @@ const SearchCity = () => {
         })
     }
 
-    console.log("Starting trending ")
+    console.log("Starting FE trending ")
     setStartTrend(true)
   }
 
@@ -92,19 +97,21 @@ const SearchCity = () => {
 
     const inputValue = c.target.value;
     console.log("inputValue: ", inputValue)
-    setSearchItem(inputValue)
+    setSearchItem(() => inputValue)
 
     // Minimum input length required and check Regex
     if ((inputValue.length > 2) && re.test(inputValue)) {
 
       communicateToBackEnd("GET", "city", `?name=${inputValue}`)
 
-      // Start timer before starting trending
+      // Start timer before starting trending at back end
       let _trendTimer = setTimeout(
-        startTrending,
-        Number(START_TREND_TIMEOUT) * 60 * 1000)
+        () => startTrending(inputValue),
+        Number(START_TREND_TIMEOUT) * 60 * 1000, inputValue )
+
       setTrendTimer(_trendTimer)
       console.log("Started trend timer: " + _trendTimer)
+      console.log("Started trend timer, searchItem: " + searchItem + " " + new Date().toTimeString())
     }
   }
 

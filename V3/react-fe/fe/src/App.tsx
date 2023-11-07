@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { Box, FormField, Grommet, Text, TextInput } from 'grommet';
+import { Grommet, Text } from 'grommet';
 import AppBar from './modules/AppBar'
+import { TestHttps } from './modules/TestHttps';
 import SearchCity from './modules/SearchCity';
-import { Trend } from './modules/Trend';
-import { Timer } from './modules/Timer';
 
 
 const theme = {
@@ -18,8 +16,8 @@ const theme = {
 
 function App() {
 
-  //   <SearchCity />
 
+  //<TestHttps />
   return (
     <Grommet theme={theme}>
       <AppBar>

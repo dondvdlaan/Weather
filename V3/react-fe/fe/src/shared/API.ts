@@ -65,6 +65,7 @@ export function useSchedulerWeatherApi<T>(startTrend: boolean, path: string | un
       //Implementing the setInterval method 
       const interval = setInterval(() => {
 
+        console.log("Polling back end")
         weatherApi("GET", path, setData);
 
         // Sample freq in minutes
@@ -95,9 +96,13 @@ export function weatherApi<T>(
 
   const baseUrl = `http://localhost:${JAVA_BE_PORT}/cityTrend?name=`
 
-  axios({
+  const weatherApiConfig = {
     method: method,
-    url: `${baseUrl}/${path}`,
+    url: `${baseUrl}${path}`,
     data,
-  }).then((response: AxiosResponse<T>) => callback(response.data));
+  }
+
+  console.log(weatherApiConfig)
+
+  axios(weatherApiConfig).then((response: AxiosResponse<T>) => callback(response.data));
 }

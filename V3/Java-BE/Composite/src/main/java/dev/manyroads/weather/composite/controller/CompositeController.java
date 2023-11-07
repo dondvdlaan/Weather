@@ -68,9 +68,19 @@ public class CompositeController {
         return cityWeatherService.storeCityWeather(cityWeather);
     }
 
-    @PostMapping("/test")
-    public String test1(@RequestBody String body) {
-        return "Holita " + body;
+    @PostMapping("/testHttps")
+    public String test1(@RequestBody CityName body) {
+
+        logger.info("body: " + body);
+
+        return "Holita " + body.getCityName();
+    }
+    @GetMapping("/test")
+    public String test2() {
+
+        logger.info("test2: ");
+
+        return "Holita ";
     }
     // ********* END testing *********
 

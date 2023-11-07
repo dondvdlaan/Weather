@@ -43,7 +43,7 @@ public class CityWeatherTrending  {
     //once an hour, (0 0 * * * *)
     //@Scheduled(cron="0 0 * * * *")
     //@Scheduled(cron= "@hourly")
-    @Scheduled(cron="* 30 * * * *")
+    @Scheduled(cron="* 0/30 * * * *")
     public void trending() {
 
         log.info("------- Checks for Start Signal from CompositeController -------------------");
