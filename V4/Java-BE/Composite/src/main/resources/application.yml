@@ -1,0 +1,82 @@
+# Port number of javaBE server
+#server.port: 8081
+server.port: 8443
+
+# HTTPS configuration
+#server.ssl:
+#  key-store-type: PKCS12
+#  key-store: classpath:keystore/composite.p12
+#  key-store-password: password
+#  key-alias: localhost
+
+# Generic scheme
+scheme: "http://"
+
+# Location service URL, internal microservice message, no ssl needed
+cityHost: "localhost:"
+cityPath: "/city?name="
+cityPort: 8082
+
+# Conditions service URL,  internal microservice message, no ssl needed
+#weatherUrl: "http://localhost:8083/conditions"
+weatherHost: "localhost:"
+weatherPath: "/conditions"
+weatherPort: 8083
+
+# CityWeather service URL,  internal microservice message, no ssl needed
+cityWeatherHost: "localhost:"
+cityWeatherPath: "/getTrend"
+cityWeatherPort: 8084
+
+# Set up KAFKA stream for cityweather. Biding name is functionname -in- index
+spring.cloud.stream:
+  defaultBinder: kafka
+  default.contentType: application/json
+  bindings:
+    cityweather-out-0:
+      destination: cityweather
+      group: cityweatherGroup
+
+#Failing messages are moved to Dead Letter Queue (DLQ)
+spring.cloud.stream.kafka.bindings.messageProcessor-in-0.consumer:
+  enableDlq: true
+
+### JWT data ###
+jwtSecret: Q/LbQIwpk749jIkf1xN3EQ61x4YlPSNRDq4oEhohiZdRdT0gv11aEUpBRwjJbgOEu41NOejwGe9pPGdvr1Hhnw==
+jwtExpirationMs: 20_000
+refreshExpirationMs: 30_000
+
+### MySQL DB ###
+# Strongly recommend to set this property to "none" in a production environment!
+spring.jpa.hibernate.ddl-auto: update
+
+spring.datasource:
+  url: jdbc:mysql://localhost/refresh-db
+  username: user
+  password: pwd
+
+### Mongo DB ###
+spring.data.mongodb:
+  host: localhost
+  port: 27017
+  database: user-db
+
+---
+# Docker profile
+spring.config.activate.on-profile: docker
+
+server.port: 8080
+cityHost: "location:"
+cityPort: 8080
+weatherHost: "conditions:"
+weatherPort: 8080
+cityWeatherHost: "cityweather:"
+cityWeatherPort: 8080
+
+spring.datasource.url: jdbc:mysql://mysql/refresh-db
+
+spring.data.mongodb.host: mongodb
+
+#spring.cloud.stream.defaultBinder: kafka
+spring.kafka.bootstrap-servers: kafka:9092
+spring.cloud.stream.kafka.binder.replication-factor: 1

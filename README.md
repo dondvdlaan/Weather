@@ -22,12 +22,24 @@ Kafka to the asynchronous MongoDB.</p>
 
 <p>Maven has been replaced by Gradle.</p>
 
+<h4>V4:</h4>
+<p>Spring Security with JWT Authentication has been added to the composite module, which actually serves as a 
+gateway for the app too. The frontend app will not continue till a valid user and password have been entered. 
+After correct authentication, a JWT token is generated and with a refresh token, they are sent back to the user. 
+Both tokens have expiration dates, the refersh token later than the JWT token. </p>
 
+<p>When the JWT token expires, the backend will send an Unauthorized 401 error back to the frontend, which is 
+intersepted by frontend. The frontend will request a new JWT token by way of the refresh token. If the refresh token
+is accepted, both a new JWT and a new refresh token are generated and sent back. If the refresh token has also
+expired, the backend will respond with a Forbidden 403 error and the frontend will show the log in screen again to
+the user.</p>
+
+<p>User credentials and refresh tokens are stored in separate databases.</p>
 
 <h3>Summary:</h3>
 <ul>
 <li>Java 17</li>
-<li>Spring Boot Web, WebFlux</li>
+<li>Spring Boot Web, Reactor, WebFlux, Security</li>
 <li>React</li>
 <li>Grommet UI</li>
 <li>Docker</li>
