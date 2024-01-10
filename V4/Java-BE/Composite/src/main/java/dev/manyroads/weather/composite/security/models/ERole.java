@@ -1,0 +1,7 @@
+package dev.manyroads.weather.composite.security.models;
+
+public enum ERole {
+    ROLE_USER,
+    ROLE_MODERATOR,
+    ROLE_ADMIN
+}
