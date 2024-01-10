@@ -28,6 +28,12 @@ cityWeatherHost: "localhost:"
 cityWeatherPath: "/getTrend"
 cityWeatherPort: 8084
 
+### Logger level ###
+logging:
+  level:
+    root: WARN
+    dev.manyroads: DEBUG
+    
 # Set up KAFKA stream for cityweather. Biding name is functionname -in- index
 spring.cloud.stream:
   defaultBinder: kafka

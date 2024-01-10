@@ -23,10 +23,10 @@ public class TestController {
         return auth.map(a -> "Holita " + a.getName());
     }
 
-    @GetMapping("/securitytesttest2")
+    @GetMapping("/securitytest2")
     public Mono<String> testing() {
 
-        logger.info("/securitytesttest2");
+        logger.info("/securitytest2");
 
         return Mono.just("Holita2");
     }
