@@ -1,7 +1,7 @@
 import { Grommet, Text } from 'grommet';
-import AppBar from './modules/AppBar'
-import { TestHttps } from './modules/TestHttps';
-import SearchCity from './modules/SearchCity';
+import AppBar from './AppBar'
+import { TestHttps } from './TestHttps';
+import SearchCity from './SearchCity';
 
 
 const theme = {

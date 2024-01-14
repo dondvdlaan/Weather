@@ -33,7 +33,7 @@ public class WebfluxSecurityConfig {
         http.cors(c -> {
             CorsConfigurationSource source = request -> {
                 CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(List.of("http://localhost:3005"));
+                config.setAllowedOrigins(List.of("http://localhost:5000", "http://localhost:3005"));
                 config.setAllowedMethods(
                         List.of("GET", "POST", "PUT", "DELETE"));
                 config.setAllowedHeaders(List.of("*"));

@@ -4,6 +4,9 @@ import { CityAPI } from "../shared/API";
 import { CityWeather } from "../types/CityWeather";
 import { WeatherDetails } from "./WeatherDetails";
 import { Trend } from "./Trend";
+import axiosInstance from "../shared/ApiIntercept";
+import { useNavigate } from "react-router-dom";
+import { Login } from "./login/Login";
 
 /**
  * This module recieves search inputs from user looking for a city weather report and communicates with
@@ -12,11 +15,17 @@ import { Trend } from "./Trend";
 const SearchCity = () => {
 
   // ---- Constants and variables ----
+  const [token, setToken] = useState(localStorage.jwt);
   const [searchItem, setSearchItem] = useState<string | undefined>("")
   const [searchResults, setSearchResults] = useState<CityWeather>();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [trendTimer, setTrendTimer] = useState<number>()
   const [startTrend, setStartTrend] = useState<boolean>(false)
+  const navigate = useNavigate();
+
+  // If login token is not there, go to login
+  console.log("token: ", token)
+  if (!token) return <Login setToken={setToken} />;
 
   console.log("DEBUG searchItem: " + searchItem + " " + new Date().toTimeString())
 
@@ -44,13 +53,23 @@ const SearchCity = () => {
     if (searchItem) {
       console.log("inputValue after if: ", inputValue, " " + new Date().toTimeString())
 
-      CityAPI("POST", "startTrend", "", { "cityName": inputValue })
+      axiosInstance.post("/startTrend", { "cityName": inputValue })
+        //CityAPI("POST", "startTrend", "", { "cityName": inputValue })
         .then(res => {
           console.log("startTrend: ", res.data)
         })
         .catch(err => {
           console.log("err: ", err)
           setErrorMessage("Out of order. Pls try again later.")
+
+          /**
+          * Check if token in storage is empty and error is 403 forbidden, 
+          * then refresh page, which will lead to login page
+          */
+          if (localStorage.getItem("jwt") == null && err.response.status == 403) {
+            console.log("onTest catch in if");
+            navigate(0)
+          }
         })
     }
 
@@ -67,7 +86,8 @@ const SearchCity = () => {
   const communicateToBackEnd = (method: string, path: string, inputValue: string, data = {}) => {
 
     // Retrieve weather report for city from back end
-    CityAPI(method, path, inputValue, data)
+    axiosInstance.get(path + inputValue)
+      // CityAPI(method, path, inputValue, data)
       .then(res => {
         console.log("cityWeather: ", res.data)
         setSearchResults(res.data)
@@ -76,6 +96,15 @@ const SearchCity = () => {
         console.log("err: ", err)
         setSearchResults(defaultCityWeather)
         setErrorMessage("Out of order. Pls try again later.")
+
+        /**
+        * Check if token in storage is empty and error is 403 forbidden, 
+        * then refresh page, which will lead to login page
+        */
+        if (localStorage.getItem("jwt") == null && err.response.status == 403) {
+          console.log("onTest catch in if");
+          navigate(0)
+        }
       })
   }
 
@@ -107,7 +136,7 @@ const SearchCity = () => {
       // Start timer before starting trending at back end
       let _trendTimer = setTimeout(
         () => startTrending(inputValue),
-        Number(START_TREND_TIMEOUT) * 60 * 1000, inputValue )
+        Number(START_TREND_TIMEOUT) * 60 * 1000, inputValue)
 
       setTrendTimer(_trendTimer)
       console.log("Started trend timer: " + _trendTimer)

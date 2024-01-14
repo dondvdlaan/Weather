@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Class CompositeController receives signals from Front End for CityWeather requests
@@ -18,7 +19,7 @@ import java.util.logging.Logger;
 @CrossOrigin
 public class CompositeController {
 
-    private static Logger logger = Logger.getLogger(CompositeController.class.getName());
+    private static Logger logger = LogManager.getLogger(CompositeController.class.getName());
 
     CityWeatherService cityWeatherService;
 
@@ -37,7 +38,7 @@ public class CompositeController {
     )
     public Mono<CityWeather> getCityWeather(@RequestParam(value = "name") String cityName) {
 
-        logger.info("cityName: " + cityName);
+        logger.debug("cityName: " + cityName);
 
         return cityWeatherService.getCityWeather(cityName);
     }
@@ -54,7 +55,7 @@ public class CompositeController {
     )
     public Flux<CityWeather> getTrendCityWeather(@RequestParam(value = "name") String cityName) {
 
-        logger.info("cityTrend cityName: " + cityName);
+        logger.debug("cityTrend cityName: " + cityName);
 
         return cityWeatherService.getTrendCityWeather(cityName);
     }
@@ -63,7 +64,7 @@ public class CompositeController {
     @PostMapping("/storeCity")
     public Mono<CityWeather> createCityWeather(@RequestBody CityWeather cityWeather) {
 
-        logger.info("cityWeather: " + cityWeather);
+        logger.debug("cityWeather: " + cityWeather);
 
         return cityWeatherService.storeCityWeather(cityWeather);
     }
@@ -71,21 +72,21 @@ public class CompositeController {
     @PostMapping("/testHttps")
     public String test1(@RequestBody CityName body) {
 
-        logger.info("body: " + body);
+        logger.debug("body: " + body);
 
         return "Holita " + body.getCityName();
     }
     @GetMapping("/test")
     public String test2() {
 
-        logger.info("test2: ");
+        logger.debug("test2: ");
 
         return "Holita ";
     }
     // ********* END testing *********
 
     /**
-     * Methode received City name to start trending of CityWeather
+     * Methode receives City name to start scheduler for trending of CityWeather
      * @param cityName  : City to be trended to DB
      * @return          : Confirmation scheduler started
      */
@@ -94,15 +95,16 @@ public class CompositeController {
             consumes = "application/json")
     public ResponseEntity startTrending(@RequestBody CityName cityName) {
 
-        logger.info("startTrending -> cityName: " + cityName.getCityName());
+        logger.debug("startTrend -> cityName: " + cityName.getCityName());
 
-        // Stop trending
+        // Reset trending
         CityWeatherTrending.setTrendStarted(false);
-        // Communicate CityNmae and start trending to CityWeatherTrending
+
+        // Communicate CityName and start scheduler for trending to CityWeatherTrending
         CityWeatherTrending.setCityName(cityName.getCityName());
         CityWeatherTrending.setTrendStarted(true);
 
-        return ResponseEntity.ok("Scheduler started: " + cityName);
+        return ResponseEntity.ok("Scheduler trending started: " + cityName);
     }
 
     // ---- Submethods ----

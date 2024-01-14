@@ -1,17 +1,22 @@
 import axios, { AxiosResponse, Method } from "axios"
 import { useEffect, useState } from "react"
+import axiosInstance from "./ApiIntercept";
+
 
 // General constants
 const JAVA_BE_PORT = process.env.REACT_APP_JAVA_BE_PORT
-const SAMPLE_FREQ= process.env.REACT_APP_SAMPLE_FREQ || 5
+const SAMPLE_FREQ = process.env.REACT_APP_SAMPLE_FREQ || 5
 
+
+// *** Sub-functions ***
+const currentTime = () => new Date().toTimeString().substring(0, 8)
 
 /**
  * API retrieves weather report for city from back end
  * @param cityName 
  * @returns 
  */
-export const CityAPI = (_method: string, path:string, cityName: string, data={}) => {
+export const CityAPI = (_method: string, path: string, cityName: string, data = {}) => {
 
   const baseURL = `http://localhost:${JAVA_BE_PORT}/`
 
@@ -22,7 +27,7 @@ export const CityAPI = (_method: string, path:string, cityName: string, data={})
     data
   }
 
-  console.log("axiosConfig: ", axiosConfig)
+  console.log("axios axiosConfig: ", axiosConfig)
 
   return axios(axiosConfig)
 }
@@ -49,13 +54,15 @@ export function useWeatherApi<T>(path: string): [T | undefined, Setter<T>] {
 
 /*
  * Function customeHook useSchedulerWeatherApi which, after receiving startTrend signal, 
- * polls back end for cityweather trend data
+ * polls backend for cityweather trend data
  *
  * @param startTrend [boolean]    : start signal for scheduler
  * @param path [string]           : relative path to baseUrl
  * @return                        : Response Data
  */
-export function useSchedulerWeatherApi<T>(startTrend: boolean, path: string | undefined): [T | undefined, Setter<T>] {
+export function useSchedulerWeatherApi<T>(
+  startTrend: boolean,
+  path: string | undefined): [T | undefined, Setter<T>] {
 
   const [data, setData] = useState<T>();
 
@@ -65,7 +72,7 @@ export function useSchedulerWeatherApi<T>(startTrend: boolean, path: string | un
       //Implementing the setInterval method 
       const interval = setInterval(() => {
 
-        console.log("Polling back end")
+        console.log(currentTime(), " Polling back end")
         weatherApi("GET", path, setData);
 
         // Sample freq in minutes
@@ -102,7 +109,17 @@ export function weatherApi<T>(
     data,
   }
 
-  console.log(weatherApiConfig)
+  console.log("API weatherApi path: ", path)
+  //console.log(weatherApiConfig)
 
-  axios(weatherApiConfig).then((response: AxiosResponse<T>) => callback(response.data));
+  axiosInstance.get("cityTrend?name=" + path)
+    .then((response: AxiosResponse<T>) => {
+
+      console.log(currentTime(), " response: cityTrend?name=" + path + " ", response)
+      return callback(response.data)
+    })
+    .catch(err => console.log("err: ", err))
+  //axios(weatherApiConfig).then((response: AxiosResponse<T>) => callback(response.data));
+
+
 }

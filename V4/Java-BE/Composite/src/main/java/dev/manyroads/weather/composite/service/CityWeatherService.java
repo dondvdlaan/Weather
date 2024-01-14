@@ -116,7 +116,7 @@ public class CityWeatherService {
     }
 
     /**
-     * Retrieve trend data for city
+     * Retrieve trend data for city from
      *
      * @param cityName : City for which trending is requested
      * @return Flux    : Trend data for city
@@ -128,7 +128,7 @@ public class CityWeatherService {
         EXAMPLE: "curl '-X' 'GET' 'http://localhost:8081/getTrend/Adam'"
          */
         String cityWeatherUri = cityWeatherUrl + "/" + cityName;
-        logger.info("**** cityWeatherUri: " + cityWeatherUri);
+        logger.info("getTrendCityWeather cityWeatherUri: " + cityWeatherUri);
 
         // Initialise variables
         Flux<CityWeather> fluxCityWeather = Flux.empty();
@@ -136,7 +136,7 @@ public class CityWeatherService {
         // Compose asynchronous webClient
         WebClient webClient = WebClient.create(cityWeatherUri);
 
-        logger.info("**** Retrieving trend CityWeather fot :" + cityName);
+        logger.info("getTrendCityWeather Retrieving trend CityWeather fot :" + cityName);
 
         try {
             fluxCityWeather = webClient

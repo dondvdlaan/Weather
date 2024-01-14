@@ -67,7 +67,7 @@ public class CityWeatherController {
     }
 
     /**
-     * Method getCityWeatherByName to retrieve trend of CityWeather by city name
+     * Method getCityWeatherByName to retrieve trend of CityWeather by city name from DB
      * Example: curl '-X' 'GET' 'http://localhost:8081/getTrend/madrid'
      *
      * @param name : City name

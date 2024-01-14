@@ -40,6 +40,7 @@ public class CityWeatherService {
      * Method to retrieve all CityWeather from database
      */
     public Flux<CityWeather> retrieveCityWeather() {
+
         return cityWeatherRepository.findAll()
                 .log()
                 .map(e -> cityWeatherMapper.entityToApi(e));
@@ -52,7 +53,7 @@ public class CityWeatherService {
 
         logger.log(Level.INFO,"***** getCityWeatherByName: " + name);
 
-        return cityWeatherRepository.findByNameOrderByTime(name)
+        return cityWeatherRepository.findByNameIgnoreCaseOrderByTime(name)
                 .log()
                 .map(e -> cityWeatherMapper.entityToApi(e));
     }

@@ -55,8 +55,8 @@ public class CityWeatherServiceTest extends MongoDbTestBase {
         Event event = new Event(Event.Type.Save,1,cityWeather);
         messageProcessor.accept(event);
 
-        assertNotNull(cityWeatherRepository.findByName("Rdam").blockFirst());
-        assert(cityWeatherRepository.findByName("Rdam").blockFirst().getName().equals("Rdam"));
+        assertNotNull(cityWeatherRepository.findByNameIgnoreCase("Rdam").blockFirst());
+        assert(cityWeatherRepository.findByNameIgnoreCase("Rdam").blockFirst().getName().equals("Rdam"));
 
     }
 }

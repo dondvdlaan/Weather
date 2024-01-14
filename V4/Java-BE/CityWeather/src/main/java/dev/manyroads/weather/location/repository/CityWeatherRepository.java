@@ -6,6 +6,6 @@ import reactor.core.publisher.Flux;
 
 public interface CityWeatherRepository extends ReactiveMongoRepository<CityWeatherEntity, String > {
 
-    Flux<CityWeatherEntity> findByName(String name);
-    Flux<CityWeatherEntity> findByNameOrderByTime(String name);
+    Flux<CityWeatherEntity> findByNameIgnoreCase(String name);
+    Flux<CityWeatherEntity> findByNameIgnoreCaseOrderByTime(String name);
 }

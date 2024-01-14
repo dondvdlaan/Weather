@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
  * and the city name is received from the CompositeController, this Class begins trending to the DB.
  */
 @Service
-public class CityWeatherTrending  {
+public class CityWeatherTrending {
 
     private static Logger log = LoggerFactory.getLogger(CityWeatherTrending.class);
     // Start signal is set by the CompositeController startTrending methode
@@ -21,6 +21,7 @@ public class CityWeatherTrending  {
     // City name is set by the CompositeController startTrending methode
     private static String cityName = "noCityName";
 
+    // Scheduler interval in ms (not used)
     private final int schedulerRate = 30000;
 
     CityWeatherService cityWeatherService;
@@ -40,24 +41,23 @@ public class CityWeatherTrending  {
     /**
      * Method trending is triggered every x s (fixedrate)
      */
-    //once an hour, (0 0 * * * *)
-    //@Scheduled(cron="0 0 * * * *")
-    //@Scheduled(cron= "@hourly")
-    @Scheduled(cron="* 0/30 * * * *")
+    // Scheduler for treding every 30 min
+    //@Scheduled(cron = "* 0 30 * * *")
+    @Scheduled(fixedRate = 1800_000)
     public void trending() {
 
-        log.info("------- Checks for Start Signal from CompositeController -------------------");
-        log.info(" ------- Start Signal: " + trendStarted);
-        log.info(" ------- City name: " + cityName);
+        log.debug("------- Checks for Start Signal from CompositeController -------------------");
+        log.debug(" ------- Start Signal: " + trendStarted);
+        log.debug(" ------- City name: " + cityName);
 
-        if(trendStarted){
+        if (trendStarted) {
 
             log.info("------- Started Trending -------------------");
             log.info("------- CityName: " + cityName);
 
-            try{
+            try {
                 log.info("------- Retrieve CityWeather -------------------");
-                Mono<CityWeather> mono =cityWeatherService.getCityWeather(cityName);
+                Mono<CityWeather> mono = cityWeatherService.getCityWeather(cityName);
 
                 // Convert Mono to Class CityWeather
                 CityWeather cityWeather = mono.block();
@@ -67,9 +67,9 @@ public class CityWeatherTrending  {
                 Mono<CityWeather> mono2 = cityWeatherService.storeCityWeather(cityWeather);
 
                 log.info("------- Stored CityWeather -------------------");
-                mono2.subscribe(m-> System.out.println("------- Stored CityWeather: " + m));
+                mono2.subscribe(m -> System.out.println("------- Stored CityWeather: " + m));
 
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 log.error("Error retrieving CityWeather: " + ex.getMessage());
             }
         }

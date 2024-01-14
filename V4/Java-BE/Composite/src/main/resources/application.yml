@@ -49,8 +49,10 @@ spring.cloud.stream.kafka.bindings.messageProcessor-in-0.consumer:
 
 ### JWT data ###
 jwtSecret: Q/LbQIwpk749jIkf1xN3EQ61x4YlPSNRDq4oEhohiZdRdT0gv11aEUpBRwjJbgOEu41NOejwGe9pPGdvr1Hhnw==
-jwtExpirationMs: 20_000
-refreshExpirationMs: 30_000
+# 10 min jwt
+jwtExpirationMs: 600_000
+# 12 hours refresh token
+refreshExpirationMs: 43_200_000
 
 ### MySQL DB ###
 # Strongly recommend to set this property to "none" in a production environment!
