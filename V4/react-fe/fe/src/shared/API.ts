@@ -1,15 +1,13 @@
 import axios, { AxiosResponse, Method } from "axios"
 import { useEffect, useState } from "react"
 import axiosInstance from "./ApiIntercept";
+import { currentTime } from "./HelperFunctions";
 
 
 // General constants
 const JAVA_BE_PORT = process.env.REACT_APP_JAVA_BE_PORT
 const SAMPLE_FREQ = process.env.REACT_APP_SAMPLE_FREQ || 5
 
-
-// *** Sub-functions ***
-const currentTime = () => new Date().toTimeString().substring(0, 8)
 
 /**
  * API retrieves weather report for city from back end

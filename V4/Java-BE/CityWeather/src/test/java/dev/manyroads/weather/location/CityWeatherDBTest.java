@@ -33,7 +33,8 @@ public class CityWeatherDBTest extends MongoDbTestBase
         Basic test to see if MongoDB is working
          */
         CityWeatherEntity cityWeatherEntity = new CityWeatherEntity(
-                "Berlin","GER",20.1D,1.6D,"GMT",new Date().toString()
+
+                //"Berlin","GER",20.1D,1.6D,"GMT",new Date().toString()
         );
 
         Mono<CityWeatherEntity> mono = cityWeatherRepository.save(cityWeatherEntity);
@@ -53,7 +54,7 @@ public class CityWeatherDBTest extends MongoDbTestBase
     public void cityWeatherRepositoryTest() throws Exception {
 
         CityWeatherEntity cityWeatherEntity = new CityWeatherEntity(
-                "Paris","FR",19.1D,1.0D,"GMT",new Date().toString()
+                //"Paris","FR",19.1D,1.0D,"GMT",new Date().toString()
         );
 
         StepVerifier.create(

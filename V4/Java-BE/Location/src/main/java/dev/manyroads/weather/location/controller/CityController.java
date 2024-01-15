@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 public class CityController {
 
     static Logger logger = Logger.getLogger(CityController.class.getName());
+    // Boolean flag to remember if back-up city service for retrieving city coordinates
     public static boolean backupCityService = false;
     static int delayBackupCityservice = 60;
 
@@ -30,6 +31,7 @@ public class CityController {
 
     /*
     Method receives location request with parameter "name" in the uri.
+    If first city location api is not responding, a second city location api will be contacted automatically
     Example: curl '-X' 'GET' 'http://localhost:8081/city?name=madrid'
     */
     @GetMapping(
@@ -91,14 +93,14 @@ public class CityController {
      */
     void setBackupCityServiceFlagAndResetTimer(int delay) {
 
-        ResetBackupCityService reseteBackupCityService = new ResetBackupCityService();
+        ResetBackupCityService resetBackupCityService = new ResetBackupCityService();
         Timer timer = new Timer();
 
         // Set Citservice backup flag
         this.backupCityService = true;
 
         logger.info("Set backup CityService: " + this.backupCityService + " When: " + new Date());
-        timer.schedule(reseteBackupCityService, delay * 1000);
+        timer.schedule(resetBackupCityService, delay * 1000);
 
     }
 }

@@ -4,6 +4,8 @@ export interface CityWeather{
     country: string,
     temperature: number,
     windspeed: number,
+    weathercode: number,
+    is_day: boolean,
     timezone: string,    
     time: string
 }

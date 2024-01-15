@@ -87,8 +87,8 @@ public class CityWeatherController {
 
         logger.info("In adRecord: ");
 
-        return cityWeatherRepository.save(new CityWeatherEntity(
-                "Adam", "NL", 20.1D, 1.6D, "GMT", new Date().toString()));
+        return cityWeatherRepository.save(new CityWeatherEntity());
+        //"Adam", "NL", 20.1D, 1.6D, "GMT", new Date().toString()));
     }
 
     @GetMapping("/test")

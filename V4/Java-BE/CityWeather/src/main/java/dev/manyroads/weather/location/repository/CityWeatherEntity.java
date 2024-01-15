@@ -12,17 +12,21 @@ public class CityWeatherEntity {
     String country;
     double temperature;
     double windspeed;
+    String weathercode;
+    String is_day;
     String timezone;
     String time;
 
     public CityWeatherEntity() {
     }
 
-    public CityWeatherEntity(String name, String country, double temperature, double windspeed, String timezone, String time) {
+    public CityWeatherEntity(String name, String country, double temperature, double windspeed, String weathercode, String is_day, String timezone, String time) {
         this.name = name;
         this.country = country;
         this.temperature = temperature;
         this.windspeed = windspeed;
+        this.weathercode = weathercode;
+        this.is_day = is_day;
         this.timezone = timezone;
         this.time = time;
     }
@@ -67,6 +71,22 @@ public class CityWeatherEntity {
         this.windspeed = windspeed;
     }
 
+    public String getWeathercode() {
+        return weathercode;
+    }
+
+    public void setWeathercode(String weathercode) {
+        this.weathercode = weathercode;
+    }
+
+    public String getIs_day() {
+        return is_day;
+    }
+
+    public void setIs_day(String is_day) {
+        this.is_day = is_day;
+    }
+
     public String getTimezone() {
         return timezone;
     }
@@ -86,13 +106,15 @@ public class CityWeatherEntity {
     @Override
     public String toString() {
         return "CityWeatherEntity{" +
-                "cityWeatherID=" + cityWeatherID +
+                "cityWeatherID='" + cityWeatherID + '\'' +
                 ", name='" + name + '\'' +
                 ", country='" + country + '\'' +
                 ", temperature=" + temperature +
                 ", windspeed=" + windspeed +
+                ", weathercode='" + weathercode + '\'' +
+                ", is_day='" + is_day + '\'' +
                 ", timezone='" + timezone + '\'' +
-                ", time=" + time +
+                ", time='" + time + '\'' +
                 '}';
     }
 }
