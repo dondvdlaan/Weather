@@ -1,4 +1,5 @@
 ### test command ###
+### test2 command ###
 # Port number of CityWeathr service
 server.port: 8085
 
