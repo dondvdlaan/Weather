@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+/*
+Class to contact weather api for city weather conditions
+ */
 @Service
 public class WeatherService {
 

@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*
+Class to contact an Api to retrieve the latitude and logitude coordinates of a city
+*/
 @Service
 public class CityService2 {
 

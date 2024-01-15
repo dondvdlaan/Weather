@@ -7,6 +7,7 @@ import { Trend } from "./Trend";
 import axiosInstance from "../shared/ApiIntercept";
 import { useNavigate } from "react-router-dom";
 import { Login } from "./login/Login";
+import { currentTime } from "../shared/HelperFunctions";
 
 /**
  * This module recieves search inputs from user looking for a city weather report and communicates with
@@ -34,13 +35,15 @@ const SearchCity = () => {
     country: "noCountry",
     temperature: -270,
     windspeed: -1,
+    weathercode: 0,
+    is_day: false,
     timezone: "",
     time: new Date(0).toString()
   }
 
-  // Define regex, only characters
+  // Define regex, only characters with or without whitespaces in between
   //let re = /[a-z]/;
-  let re: RegExp = /^[a-zA-Z]*$/;
+  let re: RegExp = /^[a-zA-Z]+\s?[a-zA-Z]*$/;
 
   const START_TREND_TIMEOUT = process.env.REACT_APP_START_TREND_TIMEOUT || 1
 
@@ -140,7 +143,7 @@ const SearchCity = () => {
 
       setTrendTimer(_trendTimer)
       console.log("Started trend timer: " + _trendTimer)
-      console.log("Started trend timer, searchItem: " + searchItem + " " + new Date().toTimeString())
+      console.log("Started trend timer, searchItem: " + searchItem + " " + currentTime())
     }
   }
 

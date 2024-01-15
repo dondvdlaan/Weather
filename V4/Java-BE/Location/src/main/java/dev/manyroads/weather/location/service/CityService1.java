@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*
+Class to contact an Api to retrieve the latitude and logitude coordinates of a city
+*/
 @Service
 public class CityService1 {
 
@@ -37,7 +40,7 @@ public class CityService1 {
      */
 
     public City getCityCoordinates(String cityName)
-            throws RestClientException, Exception  {
+            throws RestClientException, Exception {
 
         // Compose uri
         String uri = cityUrl + cityName;
@@ -60,17 +63,17 @@ public class CityService1 {
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
 
         //try{
-            // Make the HTTP GET request, marshaling the response to a String
-            ResponseEntity<String> response = rest.exchange(
-                    uri,
-                    HttpMethod.GET,
-                    httpEntity, String.class);
+        // Make the HTTP GET request, marshaling the response to a String
+        ResponseEntity<String> response = rest.exchange(
+                uri,
+                HttpMethod.GET,
+                httpEntity, String.class);
 
-            logger.info("RestTemplate response: " + response);
-            logger.info("RestTemplate response body: " + response.getBody());
+        logger.info("RestTemplate response: " + response);
+        logger.info("RestTemplate response body: " + response.getBody());
 
-            // Store response as JSON string
-            cityJSON = response.getBody();
+        // Store response as JSON string
+        cityJSON = response.getBody();
 
             /*
         }catch(RestClientException ex){
@@ -86,12 +89,11 @@ public class CityService1 {
         logger.info("cityJSON length: " + cityJSON.length());
 
         // Check if reply of API is not empty. If response is "[]", then no correspondent city was found
-        if(cityJSON.length() > 2 ) {
+        if (cityJSON.length() > 2) {
             // Convert JSON string to POJO
             try {
                 cities = JSONmapper.readValue(cityJSON, City[].class);
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 logger.log(Level.SEVERE, "E5 Alg JSON foutje: " + ex.getMessage());
                 throw new Exception("E6 Alg foutje converteren JSON. ");
             }

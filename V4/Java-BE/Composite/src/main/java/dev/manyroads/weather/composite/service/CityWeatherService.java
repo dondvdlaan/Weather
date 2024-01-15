@@ -16,6 +16,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -64,7 +65,7 @@ public class CityWeatherService {
 
         // Initialise variables
         City city = new City();
-        Mono<WeatherRaw> monoWeather = Mono.empty();
+        Mono<WeatherRaw> monoWeatherRaw = Mono.empty();
         Mono<CityWeather> monoCityWeather = Mono.just(new CityWeather());
 
         // If requested city is empty, return default CityWeather
@@ -80,35 +81,37 @@ public class CityWeatherService {
             logger.log(Level.SEVERE, "Algemene fout ophalen coordinaten: " + ex.getMessage());
             return errorCityWeather();
         }
-        logger.info("City aangekomen: " + city);
+        logger.info("City coordinates aangekomen: " + city);
 
         // Check if city cityName is not empty
         if (!city.getName().equals(ApiConstants.DEFAULT_CITY_STRING)) {
 
             // Get City weather
             try {
-                monoWeather = weatherService.getWeatherForecast(city.getLatitude(), city.getLongitude());
+                monoWeatherRaw = weatherService.getWeatherForecast(city.getLatitude(), city.getLongitude());
             } catch (Exception ex) {
-                logger.log(Level.SEVERE, "Failure retieving weather");
+                logger.log(Level.SEVERE, "Failure retieving city weather");
                 return errorCityWeather();
             }
-            monoWeather.subscribe(m -> logger.info("Goede weer aangekomen:" + m));
+            monoWeatherRaw.subscribe(m -> logger.info("Goede weer aangekomen:" + m));
 
             // Combine city and weather results in to CityWeather
             City finalCity = city;
-            monoCityWeather = monoWeather.flatMap(m -> {
+            monoCityWeather = monoWeatherRaw.flatMap(m -> {
                 CityWeather cityWeather = new CityWeather();
                 cityWeather.setName(finalCity.getName());
                 cityWeather.setCountry(finalCity.getCountry());
                 cityWeather.setTemperature(m.getCurrent_weather().getTemperature());
                 cityWeather.setWindspeed(m.getCurrent_weather().getWindspeed());
+                cityWeather.setWeathercode(m.getCurrent_weather().getWeathercode());
+                cityWeather.setIs_day(m.getCurrent_weather().getIs_day());
                 cityWeather.setTimezone(m.getTimezone());
                 cityWeather.setTime(m.getCurrent_weather().getTime());
 
                 return Mono.just(cityWeather);
             });
         }
-
+        logger.info("Git branch testing " + new Date().toString().substring(11,19));
         monoCityWeather.subscribe(m -> logger.info("monoCityWeather: " + m));
 
         return monoCityWeather;

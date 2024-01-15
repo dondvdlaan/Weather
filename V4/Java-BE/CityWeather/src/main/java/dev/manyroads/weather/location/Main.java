@@ -30,7 +30,7 @@ public class Main implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
+/*
         logger.info("Filling DB");
 
         Thread.sleep(5000);
@@ -43,6 +43,7 @@ public class Main implements CommandLineRunner {
         repo.save(new CityWeatherEntity(
                         "BoBodam","NL",20.1D,1.6D,"GMT",new Date().toString()))
                 .subscribe();
+
         CityWeather c1 = new CityWeather("Adam", "NL", 15d, 2d, "GMT", new Date().toString());
         repo.save(mapper.apiToEntity(c1)).subscribe();
         CityWeather c2 = new CityWeather("Adam", "NL", 13.4d, 3d, "GMT",
@@ -57,7 +58,6 @@ public class Main implements CommandLineRunner {
         CityWeather c5 = new CityWeather("Adam", "NL", 19d, 4d, "GMT",
                 addHoursToJavaUtilDate(new Date(), 4).toString());
         repo.save(mapper.apiToEntity(c5)).subscribe();
-/*
  */
 
     }

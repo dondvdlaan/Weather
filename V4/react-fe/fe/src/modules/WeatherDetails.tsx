@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Text } from "grommet";
+import { Box, Card, CardBody, Grid, Paragraph, Text } from "grommet";
 import { CityWeather } from "../types/CityWeather"
 import { useEffect } from "react";
 
@@ -30,14 +30,16 @@ export const WeatherDetails = (props: Props) => {
         <Grid rows="small" columns={{ count: 'fit', size: 'small' }} gap="small">
 
             <Card pad="small" gap="medium" background="light-1">
-                <Text>Country: {cityWeather?.country}</Text>
-                <Text>Temperature: {cityWeather?.temperature}</Text>
-                <Text>Windspeed: {cityWeather?.windspeed}</Text>
+                <Text size="small">Country: {cityWeather?.country}</Text>
+                <Text size="small">Temperature: {cityWeather?.temperature}</Text>
+                <Text size="small">Windspeed: {cityWeather?.windspeed} km/h</Text>
+                <Text size="small"> W code: {cityWeather?.weathercode}</Text>
             </Card>
 
             <Card pad="medium" gap="medium" background="light-1">
                 <Text>Time of Display: </Text>
                 <Text>{timeNow}</Text>
+                <Text size="small">Day / Night: {cityWeather?.is_day ? "day" : "night"}</Text>
             </Card>
 
             <Card pad="medium" gap="medium" background="light-1">
