@@ -41,7 +41,7 @@ the user.</p>
 <li>Java 17</li>
 <li>Spring Boot Web, Reactor, WebFlux, Security</li>
 <li>React</li>
-<li>Grommet UI</li>
+<li>Grommet UI, Bootstrap</li>
 <li>Docker</li>
 <li>Kafka</li>
 </ul>
