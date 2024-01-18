@@ -1,0 +1,13 @@
+#reset-this-root {
+    all: initial;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.waitingText {
+    padding-top: 60px;
+}
